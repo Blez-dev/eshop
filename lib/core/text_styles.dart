@@ -77,7 +77,7 @@ class BTextTheme {
     bodySmall: TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.w500,
-      color: Colors.white.withOpacity(0.5),
+      color: Colors.white.withValues(alpha: 0.5),
     ),
     labelLarge: TextStyle(
       fontSize: 12,
@@ -87,7 +87,7 @@ class BTextTheme {
     labelMedium: TextStyle(
       fontSize: 12,
       fontWeight: FontWeight.normal,
-      color: Colors.white.withOpacity(0.5),
+      color: Colors.white.withValues(alpha: 0.5),
     ),
   );
 }

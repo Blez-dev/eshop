@@ -1,7 +1,9 @@
 import 'package:eshop/data/models/onboarding_screen_class.dart';
 import 'package:eshop/presentation/components/button.dart';
 import 'package:eshop/presentation/components/skip_button.dart';
+import 'package:eshop/routes_file/route_paths.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -89,6 +91,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                              _pageController.nextPage(duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
                            }else{
                              //Logic to move to Login Page
+                             context.go(RoutePaths.signIn);
                            }
                           },
                         ),
