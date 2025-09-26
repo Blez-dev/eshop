@@ -91,7 +91,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                              _pageController.nextPage(duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
                            }else{
                              //Logic to move to Login Page
-                             context.go(RoutePaths.signIn);
+                             context.go(RoutePaths.navigator);
                            }
                           },
                         ),

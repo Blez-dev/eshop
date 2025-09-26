@@ -6,9 +6,9 @@ class BTextTheme {
   // Light Theme Text Styles
   static TextTheme lightTextTheme = TextTheme(
     titleLarge: TextStyle(
-      fontSize: 32,
-      fontWeight: FontWeight.w700,
-      color: const Color.fromRGBO(28, 28, 28, 1),
+      fontSize: 30,
+      fontWeight: FontWeight.w900,
+      color: const Color(0xff1E232C),
     ),
     titleMedium: TextStyle(
       fontSize: 18,
@@ -33,7 +33,7 @@ class BTextTheme {
     bodySmall: TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.w500,
-      color: Colors.green.withValues(alpha: 0.5),
+      color: Colors.black.withValues(alpha: 0.5),
     ),
     labelLarge: TextStyle(
       fontSize: 12,
