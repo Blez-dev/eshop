@@ -43,7 +43,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             children: [
 
                               Image.asset(onboardingItem.image,
-                                height: MediaQuery.of(context).size.height* 0.5,),
+                                height: MediaQuery.of(context).size.height* 0.4,),
                               Text("Do your shopping here",
                                 style: Theme.of(context).textTheme.titleLarge
                               ),
@@ -64,13 +64,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                          ...List.generate(items.length, (index){
                            return AnimatedContainer(
                                width: index==currentIndex?20:9,
-                               height: 10,
+                               height: 7,
 
                                duration: Duration(milliseconds: 100),
                                 margin: EdgeInsets.symmetric(horizontal: 4),
                              decoration: BoxDecoration(
                                borderRadius: BorderRadius.circular(4),
-                               color: index==currentIndex? Colors.black: Colors.grey
+                               color: index==currentIndex? Color.fromRGBO(219, 48, 34, 1): Colors.grey
                              ),
 
                            );
@@ -80,7 +80,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         Spacer(),
                   Row(
                     children: [
-                      SkipCustomButton(width: 110, text: "skip", onTap: (){}),
+                      SkipCustomButton(width: 110, text: "skip", onTap: (){
+                        context.go(RoutePaths.navigator);
+                      }),
                       SizedBox(width: 10,),
                       Expanded(
                         child: CustomButton(

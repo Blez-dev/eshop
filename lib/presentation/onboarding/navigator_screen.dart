@@ -16,7 +16,7 @@ class NavigatorScreen extends StatelessWidget {
               Positioned.fill(
                 child: ColorFiltered(
                   colorFilter: ColorFilter.mode(
-                    Colors.black.withValues(alpha: 0.2), // dim strength
+                    Colors.black.withValues(alpha: 0.05), // dim strength
                     BlendMode.darken,
                   ),
                   child: Image.asset(
@@ -50,7 +50,9 @@ class NavigatorScreen extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(12.0),
-                        child: CustomOutlinedButton(width: double.infinity, text: "Sign up", onTap: (){}),
+                        child: CustomOutlinedButton(width: double.infinity, text: "Sign up", onTap: (){
+                          context.push(RoutePaths.signUp);
+                        }),
                       ),
 
 

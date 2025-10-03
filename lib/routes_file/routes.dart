@@ -1,6 +1,7 @@
 import 'package:eshop/presentation/onboarding/navigator_screen.dart';
 import 'package:eshop/presentation/onboarding/onboarding_screen.dart';
 import 'package:eshop/presentation/onboarding/sign_in_screen.dart';
+import 'package:eshop/presentation/onboarding/sign_up_screen.dart';
 import 'package:eshop/presentation/splash/splash_screen.dart';
 import 'package:eshop/routes_file/route_paths.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,6 +26,7 @@ class AppRoutes {
         path: RoutePaths.navigator,
         builder: (context, state) => NavigatorScreen(),
       ),
+      GoRoute(path: RoutePaths.signUp,builder: (context,state)=>SignUpScreen())
     ],
 
     initialLocation: "/splash",

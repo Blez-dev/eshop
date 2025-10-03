@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: LottieBuilder.asset("assets/splash/ecommerce.json"),
       ),
       nextScreen: const SizedBox.shrink(), // No actual navigation here
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       splashIconSize: 160,
       duration: 3500, // Match timer
       splashTransition: SplashTransition.fadeTransition,

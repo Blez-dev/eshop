@@ -17,11 +17,15 @@ class SkipCustomButton extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            color: Colors.grey
+            color: Color.fromRGBO(219, 48, 34, 0.1) // 10% opacity
+          // super light
+          // very, very light red
+
+
         ),
         child: Text(
           text,
-          style: TextStyle(fontSize: 14,color: Colors.green),
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Color.fromRGBO(219, 48, 34, 1),),
         ),
       ),
     );
