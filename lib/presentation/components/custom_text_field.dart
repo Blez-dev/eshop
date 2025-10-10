@@ -25,6 +25,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 14,color: Colors.black),
       obscureText: widget.obscureText,
       controller: widget.controller,
       decoration: InputDecoration(
@@ -36,7 +37,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         filled: true,
         fillColor: const Color(0xffF7F8F9), // background color
         contentPadding:
-        const EdgeInsets.symmetric(horizontal: 12, vertical: 23),
+        const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(

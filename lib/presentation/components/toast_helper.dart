@@ -8,7 +8,7 @@ class ToastHelper {
       context,
       message,
       "Success",
-      Colors.green,
+      Colors.white,
       Icons.check_circle,
     );
   }
@@ -19,7 +19,7 @@ class ToastHelper {
       context,
       message,
       "Error",
-      Colors.red,
+      Colors.black,
       Icons.error,
     );
   }
@@ -46,14 +46,14 @@ class ToastHelper {
     Flushbar(
       title: title,
       flushbarPosition: FlushbarPosition.TOP,
-      titleColor: Colors.black,
+      titleColor: Colors.white,
       titleSize: 16,
       messageSize: 12,
-      messageColor: Colors.black87,
+      messageColor: Colors.white,
       message: message,
-      icon: Icon(icon, color: color),
+      icon: Icon(icon, color: Colors.white),
       duration: const Duration(milliseconds: 1000),
-      backgroundColor: Color.fromRGBO(219, 48, 34, 0.3),
+      backgroundColor: Colors.black,
       margin: const EdgeInsets.all(8),
       borderRadius: BorderRadius.circular(8),
     ).show(context);

@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     // Timer to navigate after splash animation duration
     Timer(const Duration(milliseconds: 3500), () {
-      context.go(RoutePaths.onboarding); // GoRouter navigation
+      context.go(RoutePaths.authControllerScreen); // GoRouter navigation
     });
   }
 

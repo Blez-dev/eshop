@@ -1,6 +1,7 @@
 import 'package:eshop/data/models/onboarding_screen_class.dart';
 import 'package:eshop/presentation/components/button.dart';
 import 'package:eshop/presentation/components/skip_button.dart';
+import 'package:eshop/presentation/onboarding/controller/auth_controller_state.dart';
 import 'package:eshop/routes_file/route_paths.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -88,12 +89,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         child: CustomButton(
                           width: 229,
                           text: currentIndex==counts?"Get Started":"Next",
-                          onTap: (){
+                          onTap: () {
                            if(currentIndex<counts){
                              _pageController.nextPage(duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
                            }else{
                              //Logic to move to Login Page
                              context.go(RoutePaths.navigator);
+                             AuthController.setState("isFirstTime", false);
                            }
                           },
                         ),

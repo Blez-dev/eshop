@@ -35,7 +35,7 @@ class NavigatorScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: CustomButton(width: double.infinity, text: "Login", onTap: (){
-                          context.push(RoutePaths.signIn);
+                          context.go(RoutePaths.signIn);
                         }),
                       ),
 
@@ -51,7 +51,7 @@ class NavigatorScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: CustomOutlinedButton(width: double.infinity, text: "Sign up", onTap: (){
-                          context.push(RoutePaths.signUp);
+                          context.go(RoutePaths.signUp);
                         }),
                       ),
 

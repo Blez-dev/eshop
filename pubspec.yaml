@@ -49,6 +49,8 @@ dependencies:
   cached_network_image: ^3.4.1
   mask_text_input_formatter: ^2.9.0
   another_flushbar: ^1.12.32
+  fluttertoast: ^8.2.4
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
   flutter_test:

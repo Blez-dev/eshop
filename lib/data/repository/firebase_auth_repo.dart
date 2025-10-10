@@ -17,6 +17,8 @@ class AuthRepository {
       );
       return result.user;
     } on FirebaseAuthException catch (e) {
+
+      ToastHelper.error(context, e.message!);
       throw Exception(e.message);
     }
   }
@@ -46,12 +48,18 @@ class AuthRepository {
   }
 
   // 🔹 Forgot Password (Password Reset)
-  Future<void> sendPasswordResetEmail(String email) async {
-    try {
-      await _auth.sendPasswordResetEmail(email: email);
-    } on FirebaseAuthException catch (e) {
-      throw Exception(e.message);
+  Future<void> sendPasswordResetEmail(String email,BuildContext context) async {
+    if(email.isEmpty){
+      ToastHelper.error(context, "Input field cant be empty");
+    }else{
+      try {
+        await _auth.sendPasswordResetEmail(email: email);
+      } on FirebaseAuthException catch (e) {
+        ToastHelper.error(context, e.message!);
+        throw Exception(e.message);
+      }
     }
+
   }
 }
 

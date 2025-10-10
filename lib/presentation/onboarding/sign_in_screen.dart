@@ -7,6 +7,7 @@ import 'package:eshop/presentation/components/button.dart';
 import 'package:eshop/presentation/components/custom_text_field.dart';
 import 'package:eshop/presentation/components/social_tile.dart';
 import 'package:eshop/presentation/components/toast_helper.dart';
+import 'package:eshop/presentation/onboarding/controller/auth_controller_state.dart';
 import 'package:eshop/routes_file/route_paths.dart';
 import 'package:eshop/routes_file/routes.dart';
 import 'package:flutter/material.dart';
@@ -26,32 +27,48 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
 
   final TextEditingController passwordController = TextEditingController();
 
-
   // function to sign in
-  void signIn(AuthNotifier obj, String email, String password, BuildContext context,bool isVendor,bool isBuyer) async {
-
-
-    if(email.isNotEmpty&&password.isNotEmpty){
-      final result = await obj.signin(email, password,context);
+  void signIn(
+    AuthNotifier obj,
+    String email,
+    String password,
+    BuildContext context,
+    bool isVendor,
+    bool isBuyer,
+  ) async {
+    if (email.isNotEmpty && password.isNotEmpty) {
+      final result = await obj.signin(email, password, context);
       if (!context.mounted) return;
       if (result != null && isVendor) {
+        AuthController.setVendorRole("isVendor", true);
+        AuthController.setBuyerRole("isBuyer", false);
+        ToastHelper.success(context, "Login Successful");
+        await Future.delayed(const Duration(milliseconds: 1000));
+        if (!context.mounted) return;
         context.push(RoutePaths.signUp);
+      } else if (result != null && isBuyer) {
+        AuthController.setVendorRole("isVendor", false);
+        AuthController.setBuyerRole("isBuyer", true);
         ToastHelper.success(context, "Login Successful");
-      }else if(result != null && isBuyer){
+        await Future.delayed(const Duration(milliseconds: 1000));
+        if (!context.mounted) return;
         context.push(RoutePaths.navigator);
-        ToastHelper.success(context, "Login Successful");
-      }else if(result!=null && (isBuyer&&isVendor)==false){
-        ToastHelper.error(context, "Kindly pick your role \"Vendor\" or \"Buyer\"");
-
+      } else if (result != null && (isBuyer && isVendor) == false) {
+        ToastHelper.error(
+          context,
+          "Kindly pick your role \"Vendor\" or \"Buyer\"",
+        );
       }
-    }else{
+    } else {
       ToastHelper.error(context, "All fields are required");
     }
-
-
   }
 
-
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   @override
@@ -157,10 +174,15 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
                               ],
                             ),
                           ),
-                          Text(
-                            "Forgot Password?",
-                            style: Theme.of(context).textTheme.bodySmall
-                                ?.copyWith(color: const Color(0xff6A707C)),
+                          InkWell(
+                            onTap: () {
+                              context.push(RoutePaths.forgotPassword);
+                            },
+                            child: Text(
+                              "Forgot Password?",
+                              style: Theme.of(context).textTheme.bodySmall
+                                  ?.copyWith(color: const Color(0xff6A707C)),
+                            ),
                           ),
                         ],
                       ),
@@ -170,8 +192,14 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
                         isLoading: authStateWatch.isLoading,
                         text: "Login",
                         onTap: () {
-
-                          signIn(authStateRead, emailController.text.trim(), passwordController.text.trim(),context,isCheckedVendor,isCheckedBuyer);
+                          signIn(
+                            authStateRead,
+                            emailController.text.trim(),
+                            passwordController.text.trim(),
+                            context,
+                            isCheckedVendor,
+                            isCheckedBuyer,
+                          );
                         },
                       ),
                       const SizedBox(height: 30),
@@ -226,9 +254,10 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(width: 10),
+
                   InkWell(
-                    onTap: (){
-                      context.push(RoutePaths.signUp);
+                    onTap: () {
+                      context.go(RoutePaths.signUp);
                     },
                     child: Text(
                       "Register Now",

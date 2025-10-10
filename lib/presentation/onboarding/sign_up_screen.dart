@@ -47,11 +47,18 @@ class _SigninScreenState extends ConsumerState<SignUpScreen> {
         final result = await obj.signup(email, password, context);
         if (!context.mounted) return;
         if (result != null && isVendor) {
+          
+          ToastHelper.success(context, "Signup Successful");
+          await Future.delayed(Duration(milliseconds: 1000));
+          if (!context.mounted) return;
           context.push(RoutePaths.signIn);
-          ToastHelper.success(context, "Signup Successful");
+
         } else if (result != null && isBuyer) {
-          context.push(RoutePaths.navigator);
           ToastHelper.success(context, "Signup Successful");
+          await Future.delayed(const Duration(milliseconds: 1000));
+          if (!context.mounted) return;
+          context.push(RoutePaths.navigator);
+
         }
       } else {
         ToastHelper.error(context, "confirm password and password must match");
@@ -207,10 +214,15 @@ class _SigninScreenState extends ConsumerState<SignUpScreen> {
                               ],
                             ),
                           ),
-                          Text(
-                            "Forgot Password?",
-                            style: Theme.of(context).textTheme.bodySmall
-                                ?.copyWith(color: const Color(0xff6A707C)),
+                          InkWell(
+                            onTap: (){
+                              context.push(RoutePaths.forgotPassword);
+                            },
+                            child: Text(
+                              "Forgot Password?",
+                              style: Theme.of(context).textTheme.bodySmall
+                                  ?.copyWith(color: const Color(0xff6A707C)),
+                            ),
                           ),
                         ],
                       ),
@@ -290,7 +302,7 @@ class _SigninScreenState extends ConsumerState<SignUpScreen> {
                     const SizedBox(width: 10),
                     InkWell(
                       onTap: () {
-                        context.push(RoutePaths.signIn);
+                        context.go(RoutePaths.signIn);
                       },
                       child: Text(
                         "Login Now",
