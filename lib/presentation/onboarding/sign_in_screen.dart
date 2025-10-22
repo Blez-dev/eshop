@@ -10,6 +10,7 @@ import 'package:eshop/presentation/components/toast_helper.dart';
 import 'package:eshop/presentation/onboarding/controller/auth_controller_state.dart';
 import 'package:eshop/routes_file/route_paths.dart';
 import 'package:eshop/routes_file/routes.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -27,6 +28,8 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
 
   final TextEditingController passwordController = TextEditingController();
 
+
+
   // function to sign in
   void signIn(
     AuthNotifier obj,
@@ -37,23 +40,30 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
     bool isBuyer,
   ) async {
     if (email.isNotEmpty && password.isNotEmpty) {
-      final result = await obj.signin(email, password, context);
+
       if (!context.mounted) return;
-      if (result != null && isVendor) {
-        AuthController.setVendorRole("isVendor", true);
-        AuthController.setBuyerRole("isBuyer", false);
-        ToastHelper.success(context, "Login Successful");
-        await Future.delayed(const Duration(milliseconds: 1000));
-        if (!context.mounted) return;
-        context.push(RoutePaths.signUp);
-      } else if (result != null && isBuyer) {
-        AuthController.setVendorRole("isVendor", false);
-        AuthController.setBuyerRole("isBuyer", true);
-        ToastHelper.success(context, "Login Successful");
-        await Future.delayed(const Duration(milliseconds: 1000));
-        if (!context.mounted) return;
-        context.push(RoutePaths.navigator);
-      } else if (result != null && (isBuyer && isVendor) == false) {
+      if ( isVendor) {
+        final result = await obj.signin(email, password, context);
+        if(result!=null){
+          AuthController.setVendorRole("isVendor", true);
+          AuthController.setBuyerRole("isBuyer", false);
+          ToastHelper.success(context, "Login Successful");
+          await Future.delayed(const Duration(milliseconds: 1000));
+          if (!context.mounted) return;
+          context.push(RoutePaths.vendorItemsPage);
+        }
+      } else if ( isBuyer) {
+        final result = await obj.signin(email, password, context);
+        if(result!=null){
+          AuthController.setVendorRole("isVendor", false);
+          AuthController.setBuyerRole("isBuyer", true);
+          ToastHelper.success(context, "Login Successful");
+          await Future.delayed(const Duration(milliseconds: 1000));
+          if (!context.mounted) return;
+          context.push(RoutePaths.navigator);
+        }
+
+      } else if ( (isBuyer && isVendor) == false) {
         ToastHelper.error(
           context,
           "Kindly pick your role \"Vendor\" or \"Buyer\"",

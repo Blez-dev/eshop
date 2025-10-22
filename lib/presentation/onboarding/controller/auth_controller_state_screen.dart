@@ -4,6 +4,7 @@ import 'package:eshop/presentation/onboarding/navigator_screen.dart';
 import 'package:eshop/presentation/onboarding/onboarding_screen.dart';
 import 'package:eshop/presentation/onboarding/sign_in_screen.dart';
 import 'package:eshop/presentation/onboarding/sign_up_screen.dart';
+import 'package:eshop/vendor_directory/views/vendor_items_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -37,7 +38,7 @@ class _AuthControllerStateScreenState extends State<AuthControllerStateScreen> {
       print(isFirstTime);
       return SigninScreen();
     } else if (isFirstTime == false && isLoggedIn == true && isVendor == true) {
-      return NavigatorScreen();
+      return VendorItemsPage();
     } else if (isFirstTime == false && isLoggedIn == true && isBuyer == true) {
       return SignUpScreen();
     } else {

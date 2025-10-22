@@ -7,14 +7,15 @@ class BAppThemeData {
 
   // Light Theme
   static ThemeData lightTheme = ThemeData(
+
     brightness: Brightness.light,
     scaffoldBackgroundColor:  Colors.white,
     colorScheme: const ColorScheme.light(
-      primary: Color.fromRGBO(219, 48, 34, 1),
+      primary: Colors.white,
       secondary: Color.fromRGBO(0, 150, 136, 1),
       surface: Color(0xFF1C1C1C),
     ),
-    textTheme: GoogleFonts.poppinsTextTheme().copyWith(
+    textTheme: GoogleFonts.interTextTheme().copyWith(
       titleLarge: BTextTheme.lightTextTheme.titleLarge,
       titleMedium: BTextTheme.lightTextTheme.titleMedium,
       titleSmall: BTextTheme.lightTextTheme.titleSmall,

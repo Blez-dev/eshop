@@ -6,4 +6,11 @@ class RoutePaths {
   static const String navigator= '/navigator';
   static const String forgotPassword= '/forgotPassword';
   static const String authControllerScreen= '/authControllerScreen';
+  static const String addItemsPage= '/addItemsPage';
+  static const String uploadSuccessfulPage= '/uploadSuccessfulPage';
+  static const String vendorItemsPage= '/vendorItemsPage';
+  static const String brandPage= '/brandPage';
+  static const String modelPage= '/modelPage';
+  static const String locationPage= '/locationPage';
+
 }

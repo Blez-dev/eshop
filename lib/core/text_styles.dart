@@ -7,6 +7,7 @@ class BTextTheme {
   static TextTheme lightTextTheme = TextTheme(
     titleLarge: TextStyle(
       fontSize: 30,
+
       fontWeight: FontWeight.w900,
       color: const Color(0xff1E232C),
     ),
