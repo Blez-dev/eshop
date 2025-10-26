@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
 
     // Timer to navigate after splash animation duration
-    Timer(const Duration(milliseconds: 3500), () {
+    Timer(const Duration(milliseconds: 4000), () {
       context.go(RoutePaths.authControllerScreen); // GoRouter navigation
     });
   }
@@ -27,12 +27,12 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
       splash: Center(
-        child: LottieBuilder.asset("assets/splash/ecommerce.json"),
+        child: LottieBuilder.asset("assets/splash/phoneShopping.json"),
       ),
       nextScreen: const SizedBox.shrink(), // No actual navigation here
       backgroundColor: Colors.white,
-      splashIconSize: 160,
-      duration: 3500, // Match timer
+      splashIconSize: 200,
+      duration: 4000, // Match timer
       splashTransition: SplashTransition.fadeTransition,
       animationDuration: const Duration(milliseconds: 1500),
     );

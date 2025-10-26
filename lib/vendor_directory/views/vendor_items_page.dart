@@ -1,8 +1,10 @@
+import 'package:eshop/buyer%22s_section/services/buyer%22s_phone_database.dart';
 import 'package:eshop/presentation/components/button.dart';
 import 'package:eshop/presentation/components/custom_circular_bar.dart';
 import 'package:eshop/presentation/components/custom_outlined_button.dart';
 import 'package:eshop/routes_file/route_paths.dart';
 import 'package:eshop/vendor_directory/model/clothes_user_model.dart';
+import 'package:eshop/vendor_directory/model/image_class.dart';
 import 'package:eshop/vendor_directory/services/clothes_database_service.dart';
 import 'package:eshop/vendor_directory/widgets/custom_circular_bar_2.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +21,24 @@ class VendorItemsPage extends StatefulWidget {
 }
 
 class _VendorItemsPageState extends State<VendorItemsPage> {
-  final clothesDB = ClothesDatabaseService();
+  final phonesDB = PhonesDatabaseService();
+  final marketPhoneDb = BuyersDatabase();
+  List<PopupMenuItem> popItems = [
+    PopupMenuItem(
+      value: "switch",
+      child: Row(
+        children: [
+          Icon(Icons.switch_access_shortcut),
+          Text("Switch to Market Place"),
+        ],
+      ),
+    ),
+
+    PopupMenuItem(
+      value: "logout",
+      child: Row(children: [Icon(Icons.logout), Text("Logout")]),
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -28,40 +47,64 @@ class _VendorItemsPageState extends State<VendorItemsPage> {
         centerTitle: true,
         backgroundColor: Color(0xffF9F9F9),
         title: Text("Your Active Ads", style: TextStyle(color: Colors.red)),
+        actions: [
+          PopupMenuButton(
+            color: Colors.white,
+            onSelected: (value) {
+              if (value == "switch") {
+                //blah blah blah
+                context.go(RoutePaths.homePage);
+              }
+            },
+            itemBuilder: (context) {
+              return popItems;
+            },
+          ),
+        ],
       ),
       body: SafeArea(
         child: StreamBuilder(
-          stream: clothesDB.getDocs("clothes"),
+          stream: phonesDB.getDocs("phones"),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: SpinKitFadingCircle(color: Colors.black,size: 25,));
+              return Center(
+                child: SpinKitFadingCircle(color: Colors.black, size: 25),
+              );
             }
             if (snapshot.hasError) {
               //The text not showing, might be the color
-              return Center(child: Text("An error has occurred"));
+              return Center(
+                child: Text(
+                  "An error has occurred",
+                  style: TextStyle(color: Colors.black, fontSize: 20),
+                ),
+              );
             }
             //The text not showing, might be the color
 
             if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-              return Center(child: Text("An Data Available yet"));
+              return Center(
+                child: Text(
+                  "No Ad Available yet",
+                  style: TextStyle(color: Colors.grey.shade700, fontSize: 20),
+                ),
+              );
             }
 
-            final clothesDataList = snapshot.data!.docs;
+            final phonesDataList = snapshot.data!.docs;
 
             return Column(
               children: [
                 Expanded(
                   child: ListView.builder(
-                    itemCount: clothesDataList.length,
+                    itemCount: phonesDataList.length,
                     itemBuilder: (context, index) {
                       var data =
-                          clothesDataList[index].data() as Map<String, dynamic>;
+                          phonesDataList[index].data() as Map<String, dynamic>;
 
-                      ClothesUserModel clothData = ClothesUserModel.fromJson(
-                        data,
-                      );
+                      ImageClass adData = ImageClass.fromJson(data);
 
-                      String docId= clothesDataList[index].id;
+                      String docId = phonesDataList[index].id;
 
                       return Container(
                         margin: const EdgeInsets.symmetric(
@@ -81,17 +124,20 @@ class _VendorItemsPageState extends State<VendorItemsPage> {
                               child: SizedBox(
                                 height: 104,
                                 width: 104,
-                                child: clothData.image == null
+                                child: adData.imageUrl == null
                                     ? const SizedBox()
                                     : CachedNetworkImage(
                                         placeholder: (context, url) =>
                                             const SizedBox(
                                               height: 20,
                                               width: 20,
-                                              child: SpinKitFadingCircle(color: Colors.black,size: 25,),
+                                              child: SpinKitFadingCircle(
+                                                color: Colors.black,
+                                                size: 25,
+                                              ),
                                             ),
                                         fit: BoxFit.cover,
-                                        imageUrl: clothData.image!,
+                                        imageUrl: adData.imageUrl!,
                                       ),
                               ),
                             ),
@@ -101,21 +147,21 @@ class _VendorItemsPageState extends State<VendorItemsPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  clothData.name!,
+                                  adData.model,
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 16,
                                   ),
                                 ),
                                 Text(
-                                  clothData.description!,
+                                  adData.condition,
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 16,
                                   ),
                                 ),
                                 Text(
-                                  clothData.price!,
+                                  adData.price,
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 16,
@@ -125,7 +171,7 @@ class _VendorItemsPageState extends State<VendorItemsPage> {
                                 Text(
                                   DateFormat(
                                     "yyyy-MM-dd  HH:mm",
-                                  ).format(clothData.createdOn!.toDate()),
+                                  ).format(adData.createdOn!.toDate()),
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 16,
@@ -136,25 +182,55 @@ class _VendorItemsPageState extends State<VendorItemsPage> {
                             Spacer(),
                             Column(
                               children: [
-                                IconButton(onPressed: (){
-                                  showDialog(context: context, builder: (context){
-                                    return AlertDialog(
-                                      backgroundColor: Colors.white,
-                                      title: Text("Delete Ad"),
-                                      content: Text("Deleting this ad also deletes it from the main market",style: TextStyle(color: Colors.grey),),
-                                      actions: [
-                                        CustomButton(width: double.infinity, text: "Delete", onTap: (){
-                                          clothesDB.deleteDoc(docId, "clothes");
-                                          context.pop();
-                                        }),
-                                        SizedBox(height: 10,),
-                                        CustomOutlinedButton(width: double.infinity, text: "Cancel", onTap: (){context.pop();})
-                                      ],
+                                IconButton(
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          backgroundColor: Colors.white,
+                                          title: Text("Delete Ad"),
+                                          content: Text(
+                                            "Deleting this ad also deletes it from the main market",
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                          actions: [
+                                            CustomButton(
+                                              width: double.infinity,
+                                              text: "Delete",
+                                              onTap: () {
+                                                phonesDB.deleteDoc(
+                                                  docId,
+                                                  "phones",
+                                                );
+                                                marketPhoneDb.deleteDoc(
+                                                  docId,
+                                                  "market",
+                                                );
+                                                if (!context.mounted) return;
+                                                context.pop();
+                                              },
+                                            ),
+                                            SizedBox(height: 10),
+                                            CustomOutlinedButton(
+                                              width: double.infinity,
+                                              text: "Cancel",
+                                              onTap: () {
+                                                context.pop();
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      },
                                     );
-                                  });
-                                }, icon: Icon(Icons.delete_outline),color: Color(0xFFDB3022),)
+                                  },
+                                  icon: Icon(Icons.delete_outline),
+                                  color: Color(0xFFDB3022),
+                                ),
                               ],
-                            )
+                            ),
                           ],
                         ),
                       );

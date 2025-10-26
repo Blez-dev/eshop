@@ -1,3 +1,4 @@
+import 'package:eshop/buyer%22s_section/homepage.dart';
 import 'package:eshop/presentation/components/appGlobalKey.dart';
 import 'package:eshop/presentation/onboarding/controller/auth_controller_state_screen.dart';
 import 'package:eshop/presentation/onboarding/forgot_password.dart';
@@ -51,6 +52,11 @@ class AppRoutes {
       GoRoute(
         path: RoutePaths.addItemsPage,
         builder: (context, state) => AddItemsPage(),
+      ),
+
+      GoRoute(
+        path: RoutePaths.homePage,
+        builder: (context, state) => Homepage(),
       ),
       GoRoute(
         path: RoutePaths.uploadSuccessfulPage,

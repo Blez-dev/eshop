@@ -1,3 +1,4 @@
+import 'package:eshop/buyer%22s_section/homepage.dart';
 import 'package:eshop/presentation/components/custom_circular_bar.dart';
 import 'package:eshop/presentation/onboarding/controller/auth_controller_state.dart';
 import 'package:eshop/presentation/onboarding/navigator_screen.dart';
@@ -32,15 +33,11 @@ class _AuthControllerStateScreenState extends State<AuthControllerStateScreen> {
     if (isFirstTime == true) {
       return OnboardingScreen();
     } else if (isFirstTime == false && isLoggedIn == false) {
-      print(isLoggedIn);
-      print(isVendor);
-      print(isBuyer);
-      print(isFirstTime);
       return SigninScreen();
     } else if (isFirstTime == false && isLoggedIn == true && isVendor == true) {
       return VendorItemsPage();
     } else if (isFirstTime == false && isLoggedIn == true && isBuyer == true) {
-      return SignUpScreen();
+      return Homepage();
     } else {
       return OnboardingScreen();
     }

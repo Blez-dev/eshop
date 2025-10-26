@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
+import 'package:flutter_multi_formatter/formatters/money_input_formatter.dart';
 
 class CustomTextField2 extends StatefulWidget {
   final String hintText;
@@ -7,6 +9,7 @@ class CustomTextField2 extends StatefulWidget {
   final bool obscureText;
   final TextInputType keyboardType;
 
+
   const CustomTextField2({
     super.key,
     required this.hintText,
@@ -14,6 +17,7 @@ class CustomTextField2 extends StatefulWidget {
     required this.keyboardType,
     required this.obscureText,
     this.icon,
+
   });
 
   @override
@@ -26,11 +30,22 @@ class _CustomTextField2State extends State<CustomTextField2> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+    inputFormatters: [
+      CurrencyInputFormatter(
+        leadingSymbol: "#",
+        thousandSeparator: ThousandSeparator.Comma,
+        mantissaLength: 0,
+        useSymbolPadding: true
+
+      )
+    ],
       keyboardType: widget.keyboardType,
       style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 14,color: Colors.black),
       obscureText: widget.obscureText,
       controller: widget.controller,
       decoration: InputDecoration(
+
+
         suffixIcon: widget.icon,
         hintText: widget.hintText,
         hintStyle: Theme.of(context).textTheme.bodySmall?.copyWith(

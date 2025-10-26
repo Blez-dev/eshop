@@ -28,8 +28,6 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
 
   final TextEditingController passwordController = TextEditingController();
 
-
-
   // function to sign in
   void signIn(
     AuthNotifier obj,
@@ -40,30 +38,30 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
     bool isBuyer,
   ) async {
     if (email.isNotEmpty && password.isNotEmpty) {
-
       if (!context.mounted) return;
-      if ( isVendor) {
+      if (isVendor) {
         final result = await obj.signin(email, password, context);
-        if(result!=null){
+        if (result != null) {
           AuthController.setVendorRole("isVendor", true);
           AuthController.setBuyerRole("isBuyer", false);
+          if (!context.mounted) return;
           ToastHelper.success(context, "Login Successful");
           await Future.delayed(const Duration(milliseconds: 1000));
           if (!context.mounted) return;
           context.push(RoutePaths.vendorItemsPage);
         }
-      } else if ( isBuyer) {
+      } else if (isBuyer) {
         final result = await obj.signin(email, password, context);
-        if(result!=null){
+        if (result != null) {
           AuthController.setVendorRole("isVendor", false);
           AuthController.setBuyerRole("isBuyer", true);
+          if (!context.mounted) return;
           ToastHelper.success(context, "Login Successful");
           await Future.delayed(const Duration(milliseconds: 1000));
           if (!context.mounted) return;
-          context.push(RoutePaths.navigator);
+          context.push(RoutePaths.homePage);
         }
-
-      } else if ( (isBuyer && isVendor) == false) {
+      } else if ((isBuyer && isVendor) == false) {
         ToastHelper.error(
           context,
           "Kindly pick your role \"Vendor\" or \"Buyer\"",

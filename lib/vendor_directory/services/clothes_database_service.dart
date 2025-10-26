@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ClothesDatabaseService {
+class PhonesDatabaseService {
   final firestoreInstance = FirebaseFirestore.instance;
 
   final CollectionReference database = FirebaseFirestore.instance.collection(
@@ -29,5 +29,5 @@ class ClothesDatabaseService {
 }
 
 final clothesProvider = Provider((ref) {
-  return ClothesDatabaseService();
+  return PhonesDatabaseService();
 });

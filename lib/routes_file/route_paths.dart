@@ -12,5 +12,6 @@ class RoutePaths {
   static const String brandPage= '/brandPage';
   static const String modelPage= '/modelPage';
   static const String locationPage= '/locationPage';
+  static const String homePage= '/homePage';
 
 }

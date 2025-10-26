@@ -8,8 +8,10 @@ import 'package:eshop/vendor_directory/state_manager/image_picker_notifier.dart'
 import 'package:eshop/vendor_directory/widgets/button_field.dart';
 import 'package:eshop/vendor_directory/widgets/custom_textfield_2.dart';
 import 'package:eshop/vendor_directory/widgets/custom_textfield_3.dart';
-import 'package:eshop/vendor_directory/widgets/drop_down_menu.dart';
+
 import 'package:eshop/vendor_directory/widgets/image_container.dart';
+import 'package:eshop/vendor_directory/widgets/phone_condition_dropdown.dart';
+import 'package:eshop/vendor_directory/widgets/ram_dropdown.dart';
 import 'package:eshop/vendor_directory/widgets/rom_dropdown.dart';
 import 'package:eshop/vendor_directory/widgets/size_tile.dart';
 import 'package:eshop/vendor_directory/widgets/upload_custom_button.dart';
@@ -140,11 +142,11 @@ class _AddItemsPageState extends ConsumerState<AddItemsPage> {
                   }
                 },),
                 SizedBox(height: 20),
-                RomDropdown(categories: ramCategories, hintText: "Select Ram"),
+                RamDropdown(categories: ramCategories, hintText: "Select Ram"),
                 SizedBox(height: 20),
                 RomDropdown(categories: romCategories, hintText: "Select Rom"),
                 SizedBox(height: 20),
-                RomDropdown(categories: phoneCondition, hintText: "Condition"),
+                PhoneConditionDropdown(categories: phoneCondition, hintText: "Specify Condition"),
                 SizedBox(height: 20),
                 InkWell(child: ButtonField(title: "Location: ",pickedOption: adFieldName.location,),onTap: (){
                   context.push(RoutePaths.locationPage);
@@ -159,6 +161,7 @@ class _AddItemsPageState extends ConsumerState<AddItemsPage> {
 
                 SizedBox(height: 20),
                 CustomTextField2(
+
                   hintText: "Enter Price of item",
                   controller: _priceEditingController,
                   obscureText: false,
@@ -176,22 +179,25 @@ class _AddItemsPageState extends ConsumerState<AddItemsPage> {
                   ),
                 ),
                 SizedBox(height: 10),
+
+
+                //Row for swappable yes/no question
                 Row(
                   children: [
                     Expanded(
                       child: InkWell(
                         onTap: () {
-                          imageStateReader.toggleSize("S");
+                          imageStateReader.yesToggleSwapOption();
                         },
                         child: SizeTile(
                           size: "YES",
-                          borderColor: imageProvider.isSizeOnS
+                          borderColor: imageProvider.isYes
                               ? Colors.white
                               : Colors.grey,
-                          textColor: imageProvider.isSizeOnS
+                          textColor: imageProvider.isYes
                               ? Colors.white
                               : Colors.black,
-                          backgroundColor: imageProvider.isSizeOnS
+                          backgroundColor: imageProvider.isYes
                               ? Color.fromRGBO(219, 48, 34, 1)
                               : Colors.white,
                         ),
@@ -201,17 +207,17 @@ class _AddItemsPageState extends ConsumerState<AddItemsPage> {
                     Expanded(
                       child: InkWell(
                         onTap: () {
-                          imageStateReader.toggleSize("M");
+                          imageStateReader.noToggleSwapOption();
                         },
                         child: SizeTile(
                           size: "NO",
-                          borderColor: imageProvider.isSizeOnM
+                          borderColor: imageProvider.isNo
                               ? Colors.white
                               : Colors.grey,
-                          textColor: imageProvider.isSizeOnM
+                          textColor: imageProvider.isNo
                               ? Colors.white
                               : Colors.black,
-                          backgroundColor: imageProvider.isSizeOnM
+                          backgroundColor: imageProvider.isNo
                               ? Color.fromRGBO(219, 48, 34, 1)
                               : Colors.white,
                         ),
@@ -229,7 +235,7 @@ class _AddItemsPageState extends ConsumerState<AddItemsPage> {
                       ? () {}
                       : () async {
                           await imageStateReader.uploadItem(
-                            _nameEditingController.text.trim(),
+
                             _priceEditingController.text.trim(),
                             _descriptionEditingController.text.trim(),
                           );
