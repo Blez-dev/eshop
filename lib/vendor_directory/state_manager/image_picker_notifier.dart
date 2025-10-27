@@ -24,7 +24,7 @@ class PostAddNotifier extends StateNotifier<ImageClass> {
 
   Future<void> uploadImageToDatabase() async {
     if (state.image == null) return;
-    state = state.copyWith(isLoading: true);
+
     final fileName = DateTime.now().millisecondsSinceEpoch.toString();
     final ref = FirebaseStorage.instance.ref("images").child(fileName);
 
@@ -33,7 +33,7 @@ class PostAddNotifier extends StateNotifier<ImageClass> {
     final imageUrl = await uploadTask.ref.getDownloadURL();
 
     state = state.copyWith(imageUrl: imageUrl);
-    state = state.copyWith(isLoading: false);
+
   }
 
   Future<void> pickImageFromCamera() async {
@@ -92,8 +92,17 @@ class PostAddNotifier extends StateNotifier<ImageClass> {
   void setBrandSelectedValue(bool value) {
     state = state.copyWith(brandSelection: true);
   }
+  //function to convert string price to int
+  int parsePriceString(String input) {
+    input = input.trim();
+    String cleaned = input.replaceAll('#', '').replaceAll(',', '').trim();
+    // Try to parse as integer
+    return int.tryParse(cleaned) ?? 0;
+  }
+
 
   Future<void> uploadItem(String price, String description) async {
+    final int priceInInt =parsePriceString(price);
     state = state.copyWith(price: price);
     state = state.copyWith(description: description);
     if (state.price.isNotEmpty &&
@@ -115,7 +124,9 @@ class PostAddNotifier extends StateNotifier<ImageClass> {
         Timestamp timestamp = Timestamp.fromDate(DateTime.now());
         state = state.copyWith(createdOn: timestamp);
 
-        final docId = DateTime.now().millisecondsSinceEpoch.toString();
+        final docIdAsInt = DateTime.now().millisecondsSinceEpoch;
+        final docId =docIdAsInt.toString();
+        state=state.copyWith(docId: docIdAsInt);
         //add for the general market
         final marketRef = await firestore.collection("market").doc(docId).set({
           "description": state.description,
@@ -130,6 +141,8 @@ class PostAddNotifier extends StateNotifier<ImageClass> {
           "createdOn": state.createdOn,
           "isYes": state.isYes,
           "isNo": state.isNo,
+          "docId": docIdAsInt,
+          "intPrice": priceInInt,
         });
         //add for each individual user
         final docRef = await firestore
@@ -150,6 +163,8 @@ class PostAddNotifier extends StateNotifier<ImageClass> {
               "createdOn": state.createdOn,
               "isYes": state.isYes,
               "isNo": state.isNo,
+          "docId": docIdAsInt,
+          "intPrice": priceInInt,
             });
 
         if (true) {

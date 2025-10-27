@@ -21,6 +21,7 @@ class ImageClass {
   final bool brandSelection;
   final bool isYes;
   final bool isNo;
+  final int docId;
 
   // ✅ Constructor
   ImageClass({
@@ -41,6 +42,7 @@ class ImageClass {
     this.brandSelection = false,
     this.isYes = false,
     this.isNo = false,
+    this.docId=0,
   });
 
   // ✅ copyWith method
@@ -62,6 +64,7 @@ class ImageClass {
     bool? brandSelection,
     bool? isYes,
     bool? isNo,
+    int? docId
   }) {
     return ImageClass(
       uploadSuccess: uploadSuccess ?? this.uploadSuccess,
@@ -81,6 +84,7 @@ class ImageClass {
       brandSelection: brandSelection ?? this.brandSelection,
       isYes: isYes ?? this.isYes,
       isNo: isNo ?? this.isNo,
+      docId: docId?? this.docId,
     );
   }
 
@@ -104,6 +108,7 @@ class ImageClass {
       'brandSelection': brandSelection,
       'isYes': isYes,
       'isNo': isNo,
+      'docId': docId
     };
   }
 
@@ -126,6 +131,7 @@ class ImageClass {
       brandSelection: json['brandSelection'] as bool? ?? false,
       isYes: json['isYes'] as bool? ?? false,
       isNo: json['isNo'] as bool? ?? false,
+      docId: json['docId'] is int ? json['docId'] as int : 0,
     );
   }
 }

@@ -17,7 +17,7 @@ class PhonesDatabaseService {
     final documentStream = database
         .doc(userId)
         .collection(collectionName)
-        .orderBy('createdOn', descending: true)
+        .orderBy('docId', descending: true)
         .snapshots();
     return documentStream;
   }

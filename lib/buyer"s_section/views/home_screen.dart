@@ -1,24 +1,28 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eshop/buyer%22s_section/services/buyer%22s_phone_database.dart';
+import 'package:eshop/buyer%22s_section/state_manager/price_and_brand_selection_notifier.dart';
 import 'package:eshop/buyer%22s_section/widgets/brand_tile.dart';
 import 'package:eshop/buyer%22s_section/widgets/price_tile.dart';
 import 'package:eshop/vendor_directory/model/image_class.dart';
 import 'package:eshop/vendor_directory/services/clothes_database_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends ConsumerState<HomeScreen> {
   final PhonesDatabaseService phones = PhonesDatabaseService();
-  final BuyersDatabase marketPhones= BuyersDatabase();
+  final BuyersDatabase marketPhones = BuyersDatabase();
 
   @override
   Widget build(BuildContext context) {
+    final selectionState = ref.watch(priceAndBrandProvider);
+    final selectionStateAction = ref.read(priceAndBrandProvider.notifier);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -78,60 +82,90 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Row(
                       children: [
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            selectionStateAction.lessThan100();
+                          },
                           child: PriceTile(
+                            borderColor: selectionState.priceFlag==100000?
+                               Color(0xffFFA6A6)
+                      : Color(0xffE8ECF4),
                             child: Text(
-                              "#0 - 100k",
+                              "< #100k",
                               style: TextStyle(color: Colors.black),
                             ),
                           ),
                         ),
                         SizedBox(width: 10),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            selectionStateAction.lessThan400();
+                          },
                           child: PriceTile(
+                            borderColor: selectionState.priceFlag==400000?
+                              Color(0xffFFA6A6)
+                                  : Color(0xffE8ECF4),
                             child: Text(
-                              "#100k - #200k",
+                              "< #400k",
                               style: TextStyle(color: Colors.black),
                             ),
                           ),
                         ),
                         SizedBox(width: 10),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            selectionStateAction.lessThan700();
+                          },
                           child: PriceTile(
+                            borderColor: selectionState.priceFlag==700000?
+                            Color(0xffFFA6A6)
+                                : Color(0xffE8ECF4),
                             child: Text(
-                              "#200k - #300k",
+                              "< #700k",
                               style: TextStyle(color: Colors.black),
                             ),
                           ),
                         ),
                         SizedBox(width: 10),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            selectionStateAction.lessThan1M();
+                          },
                           child: PriceTile(
+                            borderColor: selectionState.priceFlag==1000000?
+                            Color(0xffFFA6A6)
+                                : Color(0xffE8ECF4),
                             child: Text(
-                              "#300k - 400k",
+                              "< #1M",
                               style: TextStyle(color: Colors.black),
                             ),
                           ),
                         ),
                         SizedBox(width: 10),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            selectionStateAction.lessThanOnePoint5M();
+                          },
                           child: PriceTile(
+                            borderColor: selectionState.priceFlag==1500000?
+                            Color(0xffFFA6A6)
+                                : Color(0xffE8ECF4),
                             child: Text(
-                              "#400k - 500k",
+                              "< #1.5M",
                               style: TextStyle(color: Colors.black),
                             ),
                           ),
                         ),
                         SizedBox(width: 10),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            selectionStateAction.onePoint5MAbove();
+                          },
                           child: PriceTile(
+                            borderColor: selectionState.priceFlag==1500001?
+                            Color(0xffFFA6A6)
+                                : Color(0xffE8ECF4),
                             child: Text(
-                              "#500k and above",
+                              " #1.5M and above",
                               style: TextStyle(color: Colors.black),
                             ),
                           ),
@@ -144,95 +178,150 @@ class _HomeScreenState extends State<HomeScreen> {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
-                        BrandTile(
-                          child: Column(
-                            children: [
-                              SizedBox(height: 13),
-                              Image.asset(
-                                "assets/images/apple.png",
+                        //apple Tile
+                        InkWell(
+                          onTap: () {
+                            selectionStateAction.applePicked();
+                          },
+                          child: BrandTile(
+                            borderWidthColor:
+                                selectionState.brandPickedStatus == "Apple"
+                                ? Color(0xffFFA6A6)
+                                : Color(0xffE8ECF4),
+
+                            child: Column(
+                              children: [
+                                SizedBox(height: 13),
+                                Image.asset(
+                                  "assets/images/apple.png",
+                                  height: 25,
+                                  width: 25,
+                                ),
+
+                                Expanded(
+                                  child: Text(
+                                    "Apple",
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        //samsung Tile
+                        InkWell(
+                          onTap: () {
+                            selectionStateAction.samsungPicked();
+                          },
+                          child: BrandTile(
+                            borderWidthColor:
+                                selectionState.brandPickedStatus == "Samsung"
+                                ? Color(0xffFFA6A6)
+                                : Color(0xffE8ECF4),
+
+                            child: Column(
+                              children: [
+                                SizedBox(height: 13),
+                                Image.asset("assets/images/samsung2.png"),
+
+                                Expanded(
+                                  child: Text(
+                                    "Samsung",
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        //Techno Tile
+                        InkWell(
+                          onTap: () {
+                            selectionStateAction.technoPicked();
+                          },
+                          child: BrandTile(
+                            borderWidthColor:
+                                selectionState.brandPickedStatus == "Techno"
+                                ? Color(0xffFFA6A6)
+                                : Color(0xffE8ECF4),
+                            child: Column(
+                              children: [
+                                SizedBox(height: 10),
+                                Image.asset(
+                                  "assets/images/techno.png",
+                                  height: 40,
+                                  width: 40,
+                                ),
+
+                                Expanded(
+                                  child: Text(
+                                    "Techno",
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        InkWell(
+                          onTap: () {
+                            selectionStateAction.xiaomiPicked();
+                          },
+                          child: BrandTile(
+                            borderWidthColor:
+                                selectionState.brandPickedStatus == "Xiaomi"
+                                ? Color(0xffFFA6A6)
+                                : Color(0xffE8ECF4),
+                            child: Column(
+                              children: [
+                                SizedBox(height: 13),
+                                
+                                const Image(
+
+                                    image: AssetImage("assets/images/xiaomi.png"),
                                 height: 25,
-                                width: 25,
-                              ),
+                                  width: 23,
+                                ),
 
-                              Expanded(
-                                child: Text(
-                                  "Apple",
+
+
+
+                                Text(
+                                  "Xiaomi",
                                   style: TextStyle(color: Colors.black),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                         SizedBox(width: 10),
-                        BrandTile(
-                          child: Column(
-                            children: [
-                              SizedBox(height: 13),
-                              Image.asset("assets/images/samsung2.png"),
+                        InkWell(
+                          onTap: () {
+                            selectionStateAction.infinixPicked();
+                          },
+                          child: BrandTile(
+                            borderWidthColor:
+                                selectionState.brandPickedStatus == "Infinix"
+                                ? Color(0xffFFA6A6)
+                                : Color(0xffE8ECF4),
+                            child: Column(
+                              children: [
+                                SizedBox(height: 13),
+                                Image.asset(
+                                  "assets/images/infinix.png",
+                                  height: 35,
+                                  width: 35,
+                                ),
 
-                              Expanded(
-                                child: Text(
-                                  "Samsung",
+                                Text(
+                                  "Infinix",
                                   style: TextStyle(color: Colors.black),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(width: 10),
-                        BrandTile(
-                          child: Column(
-                            children: [
-                              SizedBox(height: 10),
-                              Image.asset(
-                                "assets/images/techno.png",
-                                height: 40,
-                                width: 40,
-                              ),
-
-                              Expanded(
-                                child: Text(
-                                  "Techno",
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(width: 10),
-                        BrandTile(
-                          child: Column(
-                            children: [
-                              SizedBox(height: 13),
-                              Image.asset(
-                                "assets/images/xiaomi.png",
-                                height: 25,
-                                width: 25,
-                              ),
-
-                              Text(
-                                "Xiaomi",
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(width: 10),
-                        BrandTile(
-                          child: Column(
-                            children: [
-                              SizedBox(height: 13),
-                              Image.asset(
-                                "assets/images/infinix.png",
-                                height: 35,
-                                width: 35,
-                              ),
-
-                              Text(
-                                "Infinix",
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -244,7 +333,10 @@ class _HomeScreenState extends State<HomeScreen> {
             Divider(),
             Expanded(
               child: StreamBuilder(
-                stream: marketPhones.getPhoneItems(),
+                stream:marketPhones.getPhoneItemsByBrandAndPrice(
+
+                    selectionState.priceFlag?? 0, selectionState.brandPickedStatus?? "")
+                ,
 
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
@@ -279,7 +371,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         itemCount: data.length,
                         itemBuilder: (context, index) {
-                          final dataItem = data[index].data() as Map<String, dynamic>;
+                          final dataItem =
+                              data[index].data() as Map<String, dynamic>;
                           ImageClass useMe = ImageClass.fromJson(dataItem);
 
                           return Container(
@@ -292,31 +385,48 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 // 🖼 Product image
                                 ClipRRect(
-                                  borderRadius:  BorderRadius.circular(10),
+                                  borderRadius: BorderRadius.circular(10),
                                   child: useMe.imageUrl == null
                                       ? Container(
-                                    height: itemWidth, // square image area
-                                    width: double.infinity,
-                                    color: Colors.grey[300],
-                                    child: const Icon(Icons.image_not_supported),
-                                  )
+                                          height:
+                                              itemWidth, // square image area
+                                          width: double.infinity,
+                                          color: Colors.grey[300],
+                                          child: const Icon(
+                                            Icons.image_not_supported,
+                                          ),
+                                        )
                                       : CachedNetworkImage(
-                                    imageUrl: useMe.imageUrl!,
-                                    fit: BoxFit.cover,
-                                    height: itemWidth,
-                                    width: double.infinity,
-                                    progressIndicatorBuilder: (context, url, progress) =>
-                                        Center(child: CircularProgressIndicator(value: progress.progress)),
-                                    errorWidget: (context, url, error) =>
-                                    const Icon(Icons.error, color: Colors.red),
-                                  ),
+                                          imageUrl: useMe.imageUrl!,
+                                          fit: BoxFit.cover,
+                                          height: itemWidth,
+                                          width: double.infinity,
+                                          progressIndicatorBuilder:
+                                              (
+                                                context,
+                                                url,
+                                                progress,
+                                              ) => Center(
+                                                child:
+                                                    CircularProgressIndicator(
+                                                      value: progress.progress,
+                                                    ),
+                                              ),
+                                          errorWidget: (context, url, error) =>
+                                              const Icon(
+                                                Icons.error,
+                                                color: Colors.red,
+                                              ),
+                                        ),
                                 ),
 
                                 const SizedBox(height: 6),
 
                                 // 🏷 Product name
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 6),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 6,
+                                  ),
                                   child: Text(
                                     useMe.model,
                                     style: const TextStyle(
@@ -330,7 +440,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                 // 📦 Category
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 6),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 6,
+                                  ),
                                   child: Text(
                                     useMe.location,
                                     style: const TextStyle(
@@ -343,7 +455,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                 // 💰 Price
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 6),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 6,
+                                  ),
                                   child: Text(
                                     useMe.price,
                                     style: const TextStyle(
@@ -360,8 +474,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     },
                   );
-
-
                 },
               ),
             ),
