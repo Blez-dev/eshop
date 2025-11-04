@@ -46,7 +46,7 @@ class _AddItemsPageState extends ConsumerState<AddItemsPage> {
       appBar: AppBar(
         elevation: 0,
         title: const Text("Post Ad"),
-        backgroundColor: Colors.white,
+        backgroundColor:  Color(0xffFFA6A6),
         centerTitle: true,
       ),
       body: SafeArea(

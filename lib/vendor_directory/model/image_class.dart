@@ -23,6 +23,12 @@ class ImageClass {
   final bool isNo;
   final int docId;
 
+  // User info
+  final String? username;
+  final String? email;
+  final String? whatsappNumber;
+  final String userId; // ✅ Added userId
+
   // ✅ Constructor
   ImageClass({
     this.image,
@@ -42,7 +48,11 @@ class ImageClass {
     this.brandSelection = false,
     this.isYes = false,
     this.isNo = false,
-    this.docId=0,
+    this.docId = 0,
+    this.username,
+    this.email,
+    this.whatsappNumber,
+    this.userId = "", // ✅ Default empty string
   });
 
   // ✅ copyWith method
@@ -64,7 +74,11 @@ class ImageClass {
     bool? brandSelection,
     bool? isYes,
     bool? isNo,
-    int? docId
+    int? docId,
+    String? username,
+    String? email,
+    String? whatsappNumber,
+    String? userId, // ✅ Added userId
   }) {
     return ImageClass(
       uploadSuccess: uploadSuccess ?? this.uploadSuccess,
@@ -84,7 +98,11 @@ class ImageClass {
       brandSelection: brandSelection ?? this.brandSelection,
       isYes: isYes ?? this.isYes,
       isNo: isNo ?? this.isNo,
-      docId: docId?? this.docId,
+      docId: docId ?? this.docId,
+      username: username ?? this.username,
+      email: email ?? this.email,
+      whatsappNumber: whatsappNumber ?? this.whatsappNumber,
+      userId: userId ?? this.userId, // ✅ Include in copyWith
     );
   }
 
@@ -92,7 +110,6 @@ class ImageClass {
   Map<String, dynamic> toJson() {
     return {
       'imageUrl': imageUrl,
-      // File objects can’t be stored directly in Firestore
       'isLoading': isLoading,
       'price': price,
       'createdOn': createdOn,
@@ -108,7 +125,11 @@ class ImageClass {
       'brandSelection': brandSelection,
       'isYes': isYes,
       'isNo': isNo,
-      'docId': docId
+      'docId': docId,
+      'username': username ?? '',
+      'email': email ?? '',
+      'whatsappNumber': whatsappNumber ?? '',
+      'userId': userId, // ✅ Added userId to Firestore JSON
     };
   }
 
@@ -132,6 +153,10 @@ class ImageClass {
       isYes: json['isYes'] as bool? ?? false,
       isNo: json['isNo'] as bool? ?? false,
       docId: json['docId'] is int ? json['docId'] as int : 0,
+      username: json['username'] as String?,
+      email: json['email'] as String?,
+      whatsappNumber: json['whatsappNumber'] as String?,
+      userId: json['userId'] as String? ?? '', // ✅ Parse userId from Firestore
     );
   }
 }

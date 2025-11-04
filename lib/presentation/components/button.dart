@@ -20,7 +20,7 @@ class CustomButton extends StatelessWidget {
     return InkWell(
       onTap: isLoading ? null : onTap, // disable while loading
       child: Container(
-        height: 56,
+        height: 50,
         width: width,
         alignment: Alignment.center,
         decoration: BoxDecoration(

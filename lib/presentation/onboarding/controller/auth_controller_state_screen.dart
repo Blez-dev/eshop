@@ -33,7 +33,7 @@ class _AuthControllerStateScreenState extends State<AuthControllerStateScreen> {
     if (isFirstTime == true) {
       return OnboardingScreen();
     } else if (isFirstTime == false && isLoggedIn == false) {
-      return SigninScreen();
+      return NavigatorScreen();
     } else if (isFirstTime == false && isLoggedIn == true && isVendor == true) {
       return VendorItemsPage();
     } else if (isFirstTime == false && isLoggedIn == true && isBuyer == true) {

@@ -20,7 +20,7 @@ class NavigatorScreen extends StatelessWidget {
                     BlendMode.darken,
                   ),
                   child: Image.asset(
-                    "assets/images/background.png",
+                    "assets/images/backgroundImg.png",
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -35,7 +35,7 @@ class NavigatorScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: CustomButton(width: double.infinity, text: "Login", onTap: (){
-                          context.go(RoutePaths.signIn);
+                          context.push(RoutePaths.signIn);
                         }),
                       ),
 
@@ -51,7 +51,7 @@ class NavigatorScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: CustomOutlinedButton(width: double.infinity, text: "Sign up", onTap: (){
-                          context.go(RoutePaths.signUp);
+                          context.push(RoutePaths.signUp);
                         }),
                       ),
 

@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomTextField extends StatefulWidget {
   final String hintText;
   final Widget? icon;
   final TextEditingController controller;
   final bool obscureText;
+  final int? inputLength;
 
   const CustomTextField({
     super.key,
     required this.hintText,
     required this.controller,
-
+      this.inputLength,
     required this.obscureText,
     this.icon,
   });
@@ -25,6 +27,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      inputFormatters: [
+        LengthLimitingTextInputFormatter(widget.inputLength?? 30),
+      ],
       style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 14,color: Colors.black),
       obscureText: widget.obscureText,
       controller: widget.controller,

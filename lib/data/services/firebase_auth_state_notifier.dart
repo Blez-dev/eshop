@@ -1,3 +1,4 @@
+import 'package:eshop/data/services/reg_database.dart';
 import 'package:eshop/data/services/sign_in_state_Controller.dart';
 import 'package:eshop/presentation/onboarding/controller/auth_controller_state.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,6 +11,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 class AuthNotifier extends StateNotifier<AuthState> {
   static bool success = false;
   final AuthRepository _authRepository;
+  RegDatabase setdata = RegDatabase();
 
   AuthNotifier(this._authRepository) : super(AuthState());
 
@@ -18,17 +20,19 @@ class AuthNotifier extends StateNotifier<AuthState> {
     String email,
     String password,
     BuildContext context,
+    String username,
+    String whatsappNumber,
   ) async {
     state = state.copyWith(isLoading: true, error: null, message: null);
     try {
       final user = await _authRepository.signup(email, password, context);
+
+      await setdata.saveUserData(email, username, whatsappNumber);
       state = state.copyWith(
         isLoading: false,
         user: user,
         message: "Signup successful",
       );
-
-
       return user;
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
@@ -61,6 +65,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
         user: user,
         message: "Login successful ✅",
       );
+
       AuthController.setLoginState("isLoggedIn", true);
       return user;
     } catch (e) {
@@ -74,6 +79,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     state = state.copyWith(isLoading: true, error: null, message: null);
     try {
       await _authRepository.signout();
+      AuthController.setLoginState("isLoggedIn", false);
       state = state.copyWith(
         isLoading: false,
         user: null,

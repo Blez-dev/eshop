@@ -1,12 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eshop/buyer%22s_section/services/buyer%22s_phone_database.dart';
 import 'package:eshop/buyer%22s_section/state_manager/price_and_brand_selection_notifier.dart';
+import 'package:eshop/buyer%22s_section/state_manager/savedAdNotifer.dart';
 import 'package:eshop/buyer%22s_section/widgets/brand_tile.dart';
 import 'package:eshop/buyer%22s_section/widgets/price_tile.dart';
+import 'package:eshop/routes_file/route_paths.dart';
 import 'package:eshop/vendor_directory/model/image_class.dart';
 import 'package:eshop/vendor_directory/services/clothes_database_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -18,11 +24,14 @@ class HomeScreen extends ConsumerStatefulWidget {
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   final PhonesDatabaseService phones = PhonesDatabaseService();
   final BuyersDatabase marketPhones = BuyersDatabase();
+  final  buyerId= FirebaseAuth.instance.currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {
     final selectionState = ref.watch(priceAndBrandProvider);
     final selectionStateAction = ref.read(priceAndBrandProvider.notifier);
+    final isSavedAction= ref.read(savedAdNotifierProvider.notifier);
+    final isSavedStat= ref.watch(savedAdNotifierProvider);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -31,11 +40,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           height: 45,
           width: MediaQuery.of(context).size.width * 0.65,
           child: TextField(
+            onChanged: (value) {
+              selectionStateAction.setBrandStatus(value);
+            },
             decoration: InputDecoration(
               contentPadding: EdgeInsets.symmetric(horizontal: 15),
               prefixIcon: Icon(Icons.search),
               prefixIconColor: Colors.grey,
-              hintText: "Search for phone",
+              hintText: "Search for phone\"S brand ",
               hintStyle: TextStyle(color: Colors.grey),
               filled: true,
               fillColor: Colors.white,
@@ -51,24 +63,21 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ),
         ),
         actionsPadding: EdgeInsets.symmetric(horizontal: 5),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.shopping_cart_outlined),
-          ),
-        ],
+
       ),
       body: SafeArea(
         child: Column(
           children: [
             SizedBox(height: 20),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 16),
 
-              height: 120,
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(5),
+
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image(
+                image: AssetImage("assets/images/phonesBanner.png"),
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: 120,
               ),
             ),
             SizedBox(height: 15),
@@ -86,9 +95,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             selectionStateAction.lessThan100();
                           },
                           child: PriceTile(
-                            borderColor: selectionState.priceFlag==100000?
-                               Color(0xffFFA6A6)
-                      : Color(0xffE8ECF4),
+                            borderColor: selectionState.priceFlag == 100000
+                                ? Color(0xffFFA6A6)
+                                : Color(0xffE8ECF4),
                             child: Text(
                               "< #100k",
                               style: TextStyle(color: Colors.black),
@@ -101,9 +110,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             selectionStateAction.lessThan400();
                           },
                           child: PriceTile(
-                            borderColor: selectionState.priceFlag==400000?
-                              Color(0xffFFA6A6)
-                                  : Color(0xffE8ECF4),
+                            borderColor: selectionState.priceFlag == 400000
+                                ? Color(0xffFFA6A6)
+                                : Color(0xffE8ECF4),
                             child: Text(
                               "< #400k",
                               style: TextStyle(color: Colors.black),
@@ -116,8 +125,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             selectionStateAction.lessThan700();
                           },
                           child: PriceTile(
-                            borderColor: selectionState.priceFlag==700000?
-                            Color(0xffFFA6A6)
+                            borderColor: selectionState.priceFlag == 700000
+                                ? Color(0xffFFA6A6)
                                 : Color(0xffE8ECF4),
                             child: Text(
                               "< #700k",
@@ -131,8 +140,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             selectionStateAction.lessThan1M();
                           },
                           child: PriceTile(
-                            borderColor: selectionState.priceFlag==1000000?
-                            Color(0xffFFA6A6)
+                            borderColor: selectionState.priceFlag == 1000000
+                                ? Color(0xffFFA6A6)
                                 : Color(0xffE8ECF4),
                             child: Text(
                               "< #1M",
@@ -146,8 +155,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             selectionStateAction.lessThanOnePoint5M();
                           },
                           child: PriceTile(
-                            borderColor: selectionState.priceFlag==1500000?
-                            Color(0xffFFA6A6)
+                            borderColor: selectionState.priceFlag == 1500000
+                                ? Color(0xffFFA6A6)
                                 : Color(0xffE8ECF4),
                             child: Text(
                               "< #1.5M",
@@ -161,8 +170,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             selectionStateAction.onePoint5MAbove();
                           },
                           child: PriceTile(
-                            borderColor: selectionState.priceFlag==1500001?
-                            Color(0xffFFA6A6)
+                            borderColor: selectionState.priceFlag == 1500001
+                                ? Color(0xffFFA6A6)
                                 : Color(0xffE8ECF4),
                             child: Text(
                               " #1.5M and above",
@@ -278,16 +287,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             child: Column(
                               children: [
                                 SizedBox(height: 13),
-                                
-                                const Image(
 
-                                    image: AssetImage("assets/images/xiaomi.png"),
-                                height: 25,
+                                const Image(
+                                  image: AssetImage("assets/images/xiaomi.png"),
+                                  height: 25,
                                   width: 23,
                                 ),
-
-
-
 
                                 Text(
                                   "Xiaomi",
@@ -333,14 +338,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             Divider(),
             Expanded(
               child: StreamBuilder(
-                stream:marketPhones.getPhoneItemsByBrandAndPrice(
-
-                    selectionState.priceFlag?? 0, selectionState.brandPickedStatus?? "")
-                ,
+                stream: marketPhones.getPhoneItemsByBrandAndPrice(
+                  selectionState.priceFlag ?? 0,
+                  selectionState.brandPickedStatus ?? "",
+                ),
 
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Text("waiting");
+                    return Center(child:  SpinKitFadingCircle(
+                      color: Colors.black,
+                      size: 25,
+                    ),);
                   }
                   if (snapshot.hasError) {
                     return Text("Error occured");
@@ -375,99 +383,133 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               data[index].data() as Map<String, dynamic>;
                           ImageClass useMe = ImageClass.fromJson(dataItem);
 
-                          return Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // 🖼 Product image
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: useMe.imageUrl == null
-                                      ? Container(
-                                          height:
-                                              itemWidth, // square image area
-                                          width: double.infinity,
-                                          color: Colors.grey[300],
-                                          child: const Icon(
-                                            Icons.image_not_supported,
+                          return InkWell(
+                            onTap: () async{
+
+                              final adExists= await marketPhones.checkAd(buyerId, useMe.docId.toString());
+                             if(adExists){
+
+                               isSavedAction.isSavedTrue();
+                               if(!context.mounted) return;
+                               context.push(RoutePaths.phoneDetailsPage,extra: useMe);
+                             }else{
+                               isSavedAction.isSavedFalse();
+                               if(!context.mounted) return;
+                               context.push(RoutePaths.phoneDetailsPage,extra: useMe);
+                             }
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Color(0xffE8ECF4),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // 🖼 Product image
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: useMe.imageUrl == null
+                                        ? Container(
+                                            height:
+                                                itemWidth, // square image area
+                                            width: double.infinity,
+                                            color: Colors.grey[300],
+                                            child: const Icon(
+                                              Icons.image_not_supported,
+                                            ),
+                                          )
+                                        : CachedNetworkImage(
+                                            imageUrl: useMe.imageUrl!,
+                                            fit: BoxFit.cover,
+                                            height: itemWidth,
+                                            width: double.infinity,
+                                            progressIndicatorBuilder:
+                                                (
+                                                  context,
+                                                  url,
+                                                  progress,
+                                                ) => Center(
+                                                  //put a spin kit here
+                                                  child:
+                                                  SpinKitFadingCircle(
+                                                    color: Colors.black,
+                                                    size: 25,
+                                                  ),
+                                                ),
+                                            errorWidget: (context, url, error) =>
+                                                const Icon(
+                                                  Icons.error,
+                                                  color: Colors.red,
+                                                ),
                                           ),
-                                        )
-                                      : CachedNetworkImage(
-                                          imageUrl: useMe.imageUrl!,
-                                          fit: BoxFit.cover,
-                                          height: itemWidth,
-                                          width: double.infinity,
-                                          progressIndicatorBuilder:
-                                              (
-                                                context,
-                                                url,
-                                                progress,
-                                              ) => Center(
-                                                child:
-                                                    CircularProgressIndicator(
-                                                      value: progress.progress,
-                                                    ),
-                                              ),
-                                          errorWidget: (context, url, error) =>
-                                              const Icon(
-                                                Icons.error,
-                                                color: Colors.red,
-                                              ),
+                                  ),
+
+                                  const SizedBox(height: 6),
+
+                                  // 🏷 Product name
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 6,
+                                    ),
+                                    child: Text(
+                                      useMe.model,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                        color: Colors.black,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+
+                                  // 📦 Category
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 6,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          useMe.condition,
+                                          style: const TextStyle(
+                                            color: Colors.grey,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 14,
+                                          ),
                                         ),
-                                ),
 
-                                const SizedBox(height: 6),
 
-                                // 🏷 Product name
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 6,
-                                  ),
-                                  child: Text(
-                                    useMe.model,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15,
-                                      color: Colors.black,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
+                                        Text(
+                                          useMe.location,
+                                          style: const TextStyle(
+                                            color: Colors.grey,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ],
 
-                                // 📦 Category
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 6,
-                                  ),
-                                  child: Text(
-                                    useMe.location,
-                                    style: const TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 13,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-
-                                // 💰 Price
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 6,
-                                  ),
-                                  child: Text(
-                                    useMe.price,
-                                    style: const TextStyle(
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 14,
                                     ),
                                   ),
-                                ),
-                              ],
+
+                                  // 💰 Price
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 6,
+                                    ),
+                                    child: Text(
+                                      useMe.price,
+                                      style: const TextStyle(
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           );
                         },

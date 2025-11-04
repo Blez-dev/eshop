@@ -44,12 +44,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             children: [
 
                               Image.asset(onboardingItem.image,
-                                height: MediaQuery.of(context).size.height* 0.4,),
-                              Text("Do your shopping here",
+                                height: MediaQuery.of(context).size.height* 0.4,
+                              width: double.infinity,
+                                fit: BoxFit.cover,
+                              ),
+                              SizedBox(height: 15,),
+                              Text(
+                                  textAlign: TextAlign.center,
+                                  onboardingItem.title,
                                 style: Theme.of(context).textTheme.titleLarge
                               ),
-                              Text("DO your shopping here",
-                                style: Theme.of(context).textTheme.titleSmall
+                              SizedBox(height: 15,),
+                              Text(onboardingItem.description,
+                                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xff9AA5B8)
+                                ),
+                                textAlign: TextAlign.center,
                               ),
 
                             ],
@@ -71,7 +83,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 margin: EdgeInsets.symmetric(horizontal: 4),
                              decoration: BoxDecoration(
                                borderRadius: BorderRadius.circular(4),
-                               color: index==currentIndex? Color.fromRGBO(219, 48, 34, 1): Colors.grey
+                               color: index==currentIndex? Color.fromRGBO(219, 48, 34, 1): Color(0xffB5BDCB)
                              ),
 
                            );

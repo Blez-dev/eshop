@@ -18,6 +18,7 @@ class AuthController {
   static void setState( String isFirstTime,bool value) async{
     SharedPreferences prefs= await SharedPreferences.getInstance();
     await prefs.setBool(isFirstTime, value);
+
   }
 
   //set role

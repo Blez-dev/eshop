@@ -41,10 +41,13 @@ class _ForgotPasswordState extends ConsumerState<ForgotPassword> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 40),
-              CustomBackButton(
-                onTap: () {
+              InkWell(
+                onTap: (){
                   context.pop();
                 },
+                child: CustomBackButton(
+
+                ),
               ),
               SizedBox(height: 28),
               Text(

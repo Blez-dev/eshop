@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eshop/data/services/reg_database.dart';
 import 'package:eshop/presentation/components/flutter_toast.dart';
 import 'package:eshop/vendor_directory/model/image_class.dart';
 import 'package:eshop/vendor_directory/services/image_picker_service.dart';
@@ -10,6 +11,8 @@ import 'package:flutter_riverpod/legacy.dart';
 
 class PostAddNotifier extends StateNotifier<ImageClass> {
   ImagePickerService imagePickerService;
+
+  RegDatabase usersInfo= RegDatabase();
 
   PostAddNotifier(this.imagePickerService) : super(ImageClass());
 
@@ -33,7 +36,6 @@ class PostAddNotifier extends StateNotifier<ImageClass> {
     final imageUrl = await uploadTask.ref.getDownloadURL();
 
     state = state.copyWith(imageUrl: imageUrl);
-
   }
 
   Future<void> pickImageFromCamera() async {
@@ -92,6 +94,7 @@ class PostAddNotifier extends StateNotifier<ImageClass> {
   void setBrandSelectedValue(bool value) {
     state = state.copyWith(brandSelection: true);
   }
+
   //function to convert string price to int
   int parsePriceString(String input) {
     input = input.trim();
@@ -100,9 +103,8 @@ class PostAddNotifier extends StateNotifier<ImageClass> {
     return int.tryParse(cleaned) ?? 0;
   }
 
-
   Future<void> uploadItem(String price, String description) async {
-    final int priceInInt =parsePriceString(price);
+    final int priceInInt = parsePriceString(price);
     state = state.copyWith(price: price);
     state = state.copyWith(description: description);
     if (state.price.isNotEmpty &&
@@ -119,58 +121,82 @@ class PostAddNotifier extends StateNotifier<ImageClass> {
         state = state.copyWith(isLoading: true);
         final firestore = FirebaseFirestore.instance;
         final userId = FirebaseAuth.instance.currentUser!.uid;
+        state= state.copyWith(userId: userId);
 
-        await uploadImageToDatabase();
-        Timestamp timestamp = Timestamp.fromDate(DateTime.now());
-        state = state.copyWith(createdOn: timestamp);
+        DocumentSnapshot userDoc =await usersInfo.getUserInfo();
+        if(userDoc.exists){
+          var usersInfo = userDoc.data() as Map<String,dynamic>;
+          String username= usersInfo["username"];
+          String whatsappNumber =usersInfo["whatsappNumber"];
+          String email = usersInfo["email"];
 
-        final docIdAsInt = DateTime.now().millisecondsSinceEpoch;
-        final docId =docIdAsInt.toString();
-        state=state.copyWith(docId: docIdAsInt);
-        //add for the general market
-        final marketRef = await firestore.collection("market").doc(docId).set({
-          "description": state.description,
-          "price": state.price,
-          "brand": state.brand,
-          "model": state.model,
-          "ram": state.ramItem,
-          "rom": state.romItem,
-          "condition": state.condition,
-          "location": state.location,
-          "imageUrl": state.imageUrl,
-          "createdOn": state.createdOn,
-          "isYes": state.isYes,
-          "isNo": state.isNo,
-          "docId": docIdAsInt,
-          "intPrice": priceInInt,
-        });
-        //add for each individual user
-        final docRef = await firestore
-            .collection("users")
-            .doc(userId)
-            .collection("phones")
-            .doc(docId)
-            .set({
-              "description": state.description,
-              "price": state.price,
-              "brand": state.brand,
-              "model": state.model,
-              "ram": state.ramItem,
-              "rom": state.romItem,
-              "condition": state.condition,
-              "location": state.location,
-              "imageUrl": state.imageUrl,
-              "createdOn": state.createdOn,
-              "isYes": state.isYes,
-              "isNo": state.isNo,
-          "docId": docIdAsInt,
-          "intPrice": priceInInt,
-            });
+          await uploadImageToDatabase();
+          Timestamp timestamp = Timestamp.fromDate(DateTime.now());
+          state = state.copyWith(createdOn: timestamp);
 
-        if (true) {
-          state = state.copyWith(uploadSuccess: true);
-          SecondToastHelper.success("Item Successfully uploaded");
+          final docIdAsInt = DateTime.now().millisecondsSinceEpoch;
+          final docId = docIdAsInt.toString();
+          state = state.copyWith(docId: docIdAsInt);
+
+
+
+          //add for the general market
+          final marketRef = await firestore.collection("market").doc(docId).set({
+            "description": state.description,
+            "price": state.price,
+            "brand": state.brand,
+            "model": state.model,
+            "ramItem": state.ramItem,
+            "romItem": state.romItem,
+            "condition": state.condition,
+            "location": state.location,
+            "imageUrl": state.imageUrl,
+            "createdOn": state.createdOn,
+            "isYes": state.isYes,
+            "isNo": state.isNo,
+            "docId": docIdAsInt,
+            "intPrice": priceInInt,
+            "email" : email,
+            "username": username,
+            "whatsappNumber": whatsappNumber,
+            "userId": state.userId,
+          });
+          //add for each individual user
+          final docRef = await firestore
+              .collection("users")
+              .doc(userId)
+              .collection("phones")
+              .doc(docId)
+              .set({
+            "description": state.description,
+            "price": state.price,
+            "brand": state.brand,
+            "model": state.model,
+            "ram": state.ramItem,
+            "rom": state.romItem,
+            "condition": state.condition,
+            "location": state.location,
+            "imageUrl": state.imageUrl,
+            "createdOn": state.createdOn,
+            "isYes": state.isYes,
+            "isNo": state.isNo,
+            "docId": docIdAsInt,
+            "intPrice": priceInInt,
+            "email" : email,
+            "username": username,
+            "whatsappNumber": whatsappNumber,
+            "userId": state.userId,
+          });
+
+          if (true) {
+            state = state.copyWith(uploadSuccess: true);
+            SecondToastHelper.success("Item Successfully uploaded");
+          }
+        }else{
+
         }
+
+
       } catch (e) {
         SecondToastHelper.error(e.toString());
       } finally {
@@ -179,6 +205,8 @@ class PostAddNotifier extends StateNotifier<ImageClass> {
     } else {
       SecondToastHelper.error("All fields must be filled");
     }
+
+
   }
 }
 

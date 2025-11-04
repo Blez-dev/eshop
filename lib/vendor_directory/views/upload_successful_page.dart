@@ -16,10 +16,13 @@ class UploadSuccessfulPage extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(height: 90,),
-                Image.asset(
-                  "assets/images/uploadSuccessful.jpg",
+                 Image(
+                  image: AssetImage("assets/images/uploadSuccessful1.png"
+
+                  ),
                   height: MediaQuery.of(context).size.height * 0.3,
                 ),
+
 
                 Text(
                   "Successfully Uploaded",
@@ -34,9 +37,10 @@ class UploadSuccessfulPage extends StatelessWidget {
                 Text(
                   "Your Item has been successfully uploaded.Manage and view your orders on your dashboard",
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 15,
                     color: Color(0xff606060),
                     fontWeight: FontWeight.w500,
+                    fontStyle: FontStyle.italic
                   ),
                   textAlign: TextAlign.center,
                 ),

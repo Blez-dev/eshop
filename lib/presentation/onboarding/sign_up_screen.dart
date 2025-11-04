@@ -2,6 +2,8 @@ import 'package:eshop/data/services/sign_up_state_controller.dart';
 import 'package:eshop/presentation/components/back_button.dart';
 import 'package:eshop/presentation/components/button.dart';
 import 'package:eshop/presentation/components/custom_text_field.dart';
+import 'package:eshop/presentation/components/number_container.dart';
+import 'package:eshop/presentation/components/phone_number_text_field.dart';
 import 'package:eshop/presentation/components/social_tile.dart';
 import 'package:eshop/presentation/components/toast_helper.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +28,8 @@ class _SigninScreenState extends ConsumerState<SignUpScreen> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
+  final TextEditingController numberController =
+  TextEditingController();
 
   // function to sign in
   void signUp(
@@ -37,28 +41,28 @@ class _SigninScreenState extends ConsumerState<SignUpScreen> {
     BuildContext context,
     bool isVendor,
     bool isBuyer,
+      String whatsappNumber
   ) async {
     if (email.isNotEmpty &&
         password.isNotEmpty &&
         username.isNotEmpty &&
         confirmPassword.isNotEmpty &&
+        whatsappNumber.isNotEmpty&&
+        whatsappNumber.length==10&&
         (isVendor || isBuyer)) {
       if (confirmPassword == password) {
-        final result = await obj.signup(email, password, context);
+        final result = await obj.signup(email, password, context,username,whatsappNumber);
         if (!context.mounted) return;
         if (result != null && isVendor) {
-          
           ToastHelper.success(context, "Signup Successful");
           await Future.delayed(Duration(milliseconds: 1000));
           if (!context.mounted) return;
           context.push(RoutePaths.signIn);
-
         } else if (result != null && isBuyer) {
           ToastHelper.success(context, "Signup Successful");
           await Future.delayed(const Duration(milliseconds: 1000));
           if (!context.mounted) return;
           context.push(RoutePaths.navigator);
-
         }
       } else {
         ToastHelper.error(context, "confirm password and password must match");
@@ -67,11 +71,19 @@ class _SigninScreenState extends ConsumerState<SignUpScreen> {
       if (email.isNotEmpty &&
           password.isNotEmpty &&
           username.isNotEmpty &&
+          whatsappNumber.isNotEmpty&&
           confirmPassword.isNotEmpty) {
-        ToastHelper.error(
-          context,
-          "Kindly pick your role \"Vendor\" or \"Buyer\"",
-        );
+       if(whatsappNumber.length==10){
+         ToastHelper.error(
+           context,
+           "Kindly pick your role \"Vendor\" or \"Buyer\"",
+         );
+       }else{
+         ToastHelper.error(
+           context,
+           "Number must be of 10 characters",
+         );
+       }
       } else {
         ToastHelper.error(context, "Kindly fill in all fields");
       }
@@ -102,18 +114,38 @@ class _SigninScreenState extends ConsumerState<SignUpScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 20),
-                      CustomBackButton(
+                      InkWell(
                         onTap: () {
                           context.pop();
                         },
+                        child: CustomBackButton(),
                       ),
                       const SizedBox(height: 25),
                       Text(
                         "Hello! Register to get \nstarted",
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
+
                       const SizedBox(height: 25),
+                      Row(
+
+                        children: [
+                          NumberContainer(
+                            text: Text("+234"),
+                            imagePath: "assets/images/nigerian_flag.png",
+                          ),
+                          SizedBox(width: 10,),
+                          PhoneNumberTextField(
+                            hintText: "Enter Whatsapp Number Here",
+                            controller: numberController,
+                            obscureText: false,
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 15),
                       CustomTextField(
+                        inputLength: 20,
                         hintText: "Username",
                         controller: usernameController,
                         obscureText: false,
@@ -215,7 +247,7 @@ class _SigninScreenState extends ConsumerState<SignUpScreen> {
                             ),
                           ),
                           InkWell(
-                            onTap: (){
+                            onTap: () {
                               context.push(RoutePaths.forgotPassword);
                             },
                             child: Text(
@@ -241,6 +273,7 @@ class _SigninScreenState extends ConsumerState<SignUpScreen> {
                             context,
                             isCheckedVendor,
                             isCheckedBuyer,
+                            numberController.text.trim(),
                           );
                         },
                       ),

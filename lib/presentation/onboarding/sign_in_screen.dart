@@ -48,7 +48,7 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
           ToastHelper.success(context, "Login Successful");
           await Future.delayed(const Duration(milliseconds: 1000));
           if (!context.mounted) return;
-          context.push(RoutePaths.vendorItemsPage);
+          context.go(RoutePaths.vendorItemsPage);
         }
       } else if (isBuyer) {
         final result = await obj.signin(email, password, context);
@@ -59,7 +59,7 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
           ToastHelper.success(context, "Login Successful");
           await Future.delayed(const Duration(milliseconds: 1000));
           if (!context.mounted) return;
-          context.push(RoutePaths.homePage);
+          context.go(RoutePaths.homePage);
         }
       } else if ((isBuyer && isVendor) == false) {
         ToastHelper.error(
@@ -99,9 +99,19 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 20),
-                      CustomBackButton(onTap: () => context.pop()),
+
+                      InkWell(
+                        onTap: (){
+                          context.pop();
+                        },
+                        child: CustomBackButton(
+
+
+                        ),
+                      ),
                       const SizedBox(height: 25),
                       Text(
+
                         "Welcome back!, Glad \n to see you, Again!",
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
@@ -125,6 +135,7 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
                         ),
                       ),
                       const SizedBox(height: 15),
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -210,43 +221,43 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
                           );
                         },
                       ),
-                      const SizedBox(height: 30),
-                      Row(
-                        children: [
-                          const Expanded(
-                            child: Divider(color: Color(0xffE8ECF4)),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Text(
-                              "Or Login With",
-                              style: Theme.of(context).textTheme.bodySmall
-                                  ?.copyWith(color: const Color(0xff6A707C)),
-                            ),
-                          ),
-                          const Expanded(
-                            child: Divider(color: Color(0xffE8ECF4)),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 30),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: SocialTile(image: "assets/images/fb.png"),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: SocialTile(
-                              image: "assets/images/google.png",
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: SocialTile(image: "assets/images/apple.png"),
-                          ),
-                        ],
-                      ),
+                      // const SizedBox(height: 30),
+                      // Row(
+                      //   children: [
+                      //     const Expanded(
+                      //       child: Divider(color: Color(0xffE8ECF4)),
+                      //     ),
+                      //     Container(
+                      //       margin: const EdgeInsets.symmetric(horizontal: 20),
+                      //       child: Text(
+                      //         "Or Login With",
+                      //         style: Theme.of(context).textTheme.bodySmall
+                      //             ?.copyWith(color: const Color(0xff6A707C)),
+                      //       ),
+                      //     ),
+                      //     const Expanded(
+                      //       child: Divider(color: Color(0xffE8ECF4)),
+                      //     ),
+                      //   ],
+                      // ),
+                      // const SizedBox(height: 30),
+                      // Row(
+                      //   children: [
+                      //     Expanded(
+                      //       child: SocialTile(image: "assets/images/fb.png"),
+                      //     ),
+                      //     const SizedBox(width: 12),
+                      //     Expanded(
+                      //       child: SocialTile(
+                      //         image: "assets/images/google.png",
+                      //       ),
+                      //     ),
+                      //     const SizedBox(width: 12),
+                      //     Expanded(
+                      //       child: SocialTile(image: "assets/images/apple.png"),
+                      //     ),
+                      //   ],
+                      // ),
                     ],
                   ),
                 ),
@@ -265,7 +276,7 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
 
                   InkWell(
                     onTap: () {
-                      context.go(RoutePaths.signUp);
+                      context.push(RoutePaths.signUp);
                     },
                     child: Text(
                       "Register Now",

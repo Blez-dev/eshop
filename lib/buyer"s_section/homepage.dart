@@ -1,4 +1,6 @@
 import 'package:eshop/buyer%22s_section/views/home_screen.dart';
+import 'package:eshop/buyer%22s_section/views/profile_page.dart';
+import 'package:eshop/buyer%22s_section/views/saved_ad_page.dart';
 import 'package:flutter/material.dart';
 
 class Homepage extends StatefulWidget {
@@ -12,16 +14,8 @@ class _HomepageState extends State<Homepage> {
   int currentPage = 0;
   List<Widget> pages = [
     HomeScreen(),
-    Scaffold(
-      body: Center(
-        child: Text("second", style: TextStyle(color: Colors.red)),
-      ),
-    ),
-    Scaffold(
-      body: Center(
-        child: Text("Third", style: TextStyle(color: Colors.red)),
-      ),
-    ),
+    SavedAdPage(),
+    ProfilePage()
   ];
 
   @override

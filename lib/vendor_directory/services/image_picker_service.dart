@@ -49,7 +49,7 @@ class ImagePickerService {
     final compressedFile = await FlutterImageCompress.compressAndGetFile(
       path,
       targetPath,
-      quality: 60,
+      quality: 50,
     );
 
     if (compressedFile == null) return null;
