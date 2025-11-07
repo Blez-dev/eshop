@@ -7,6 +7,7 @@ import 'package:eshop/routes_file/routes.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,12 +26,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      themeMode: ThemeMode.light,
-      theme: BAppThemeData.lightTheme,
-      routerConfig: AppRoutes.routes,
+    return ScreenUtilInit(
+      designSize: const Size(414.43, 914.28),
+      minTextAdapt: true,
+      builder: (_, _) {
+        return MaterialApp.router(
+          title: 'Flutter Demo',
+          debugShowCheckedModeBanner: false,
+          themeMode: ThemeMode.light,
+          theme: BAppThemeData.lightTheme,
+          routerConfig: AppRoutes.routes,
+        );
+      },
     );
   }
 }

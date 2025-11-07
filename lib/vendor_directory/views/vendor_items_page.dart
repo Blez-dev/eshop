@@ -11,6 +11,7 @@ import 'package:eshop/vendor_directory/widgets/custom_circular_bar_2.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -36,7 +37,7 @@ class _VendorItemsPageState extends ConsumerState<VendorItemsPage> {
       child: Row(
         children: [
           Icon(Icons.swap_horiz_outlined),
-          SizedBox(width: 15),
+          SizedBox(width: 15.w),
           Text("Switch to Market Place"),
         ],
       ),
@@ -45,7 +46,7 @@ class _VendorItemsPageState extends ConsumerState<VendorItemsPage> {
     PopupMenuItem(
       value: "logout",
       child: Row(
-        children: [Icon(Icons.logout), SizedBox(width: 15), Text("Logout")],
+        children: [Icon(Icons.logout), SizedBox(width: 15.w), Text("Logout")],
       ),
     ),
   ];
@@ -81,13 +82,13 @@ class _VendorItemsPageState extends ConsumerState<VendorItemsPage> {
       ),
       body: SafeArea(
         child: isDeleting
-            ? Center(child: SpinKitFadingCircle(color: Colors.black, size: 25))
+            ? Center(child: SpinKitFadingCircle(color: Colors.black, size: 25.sp))
             : StreamBuilder(
                 stream: phonesDB.getDocs("phones"),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(
-                      child: SpinKitFadingCircle(color: Colors.black, size: 25),
+                      child: SpinKitFadingCircle(color: Colors.black, size: 25.sp),
                     );
                   }
                   if (snapshot.hasError) {
@@ -95,7 +96,7 @@ class _VendorItemsPageState extends ConsumerState<VendorItemsPage> {
                     return Center(
                       child: Text(
                         "An error has occurred",
-                        style: TextStyle(color: Colors.black, fontSize: 20),
+                        style: TextStyle(color: Colors.black, fontSize: 20.sp),
                       ),
                     );
                   }
@@ -107,7 +108,7 @@ class _VendorItemsPageState extends ConsumerState<VendorItemsPage> {
                         "No Ad Available yet",
                         style: TextStyle(
                           color: Colors.grey.shade700,
-                          fontSize: 20,
+                          fontSize: 20.sp,
                         ),
                       ),
                     );
@@ -130,33 +131,33 @@ class _VendorItemsPageState extends ConsumerState<VendorItemsPage> {
                             String docId = phonesDataList[index].id;
 
                             return Container(
-                              margin: const EdgeInsets.symmetric(
-                                horizontal: 20,
-                                vertical: 10,
+                              margin:  EdgeInsets.symmetric(
+                                horizontal: 20.w,
+                                vertical: 10.h,
                               ),
                               height: 104,
                               width: double.infinity,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(10.r),
                                 color: Colors.grey.shade100,
                               ),
                               child: Row(
                                 children: [
                                   ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(10.r),
                                     child: SizedBox(
-                                      height: 104,
-                                      width: 104,
+                                      height: 104.h,
+                                      width: 104.w,
                                       child: adData.imageUrl == null
                                           ? const SizedBox()
                                           : CachedNetworkImage(
                                               placeholder: (context, url) =>
-                                                  const SizedBox(
-                                                    height: 20,
-                                                    width: 20,
+                                                   SizedBox(
+                                                    height: 20.h,
+                                                    width: 20.w,
                                                     child: SpinKitFadingCircle(
                                                       color: Colors.black,
-                                                      size: 25,
+                                                      size: 25.sp,
                                                     ),
                                                   ),
                                               fit: BoxFit.cover,
@@ -164,7 +165,7 @@ class _VendorItemsPageState extends ConsumerState<VendorItemsPage> {
                                             ),
                                     ),
                                   ),
-                                  SizedBox(width: 15),
+                                  SizedBox(width: 15.w),
                                   Column(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
@@ -175,21 +176,21 @@ class _VendorItemsPageState extends ConsumerState<VendorItemsPage> {
                                         adData.model,
                                         style: TextStyle(
                                           color: Colors.black,
-                                          fontSize: 16,
+                                          fontSize: 16.sp,
                                         ),
                                       ),
                                       Text(
                                         adData.condition,
                                         style: TextStyle(
                                           color: Colors.black,
-                                          fontSize: 16,
+                                          fontSize: 16.sp,
                                         ),
                                       ),
                                       Text(
                                         adData.price,
                                         style: TextStyle(
                                           color: Colors.black,
-                                          fontSize: 16,
+                                          fontSize: 16.sp,
                                         ),
                                       ),
 
@@ -199,7 +200,7 @@ class _VendorItemsPageState extends ConsumerState<VendorItemsPage> {
                                         ).format(adData.createdOn!.toDate()),
                                         style: TextStyle(
                                           color: Colors.black,
-                                          fontSize: 16,
+                                          fontSize: 16.sp,
                                         ),
                                       ),
                                     ],
@@ -214,11 +215,12 @@ class _VendorItemsPageState extends ConsumerState<VendorItemsPage> {
                                             builder: (context) {
                                               return AlertDialog(
                                                 backgroundColor: Colors.white,
-                                                title: Text("Delete Ad"),
+                                                title: Text("Delete Ad",style: TextStyle(fontWeight: FontWeight.w700),),
                                                 content: Text(
                                                   "Deleting this ad also deletes it from the main market",
                                                   style: TextStyle(
                                                     color: Colors.grey,
+
                                                   ),
                                                 ),
                                                 actions: [

@@ -2,6 +2,7 @@ import 'package:eshop/presentation/components/toast_helper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class AuthRepository {
   final FirebaseAuth _auth;

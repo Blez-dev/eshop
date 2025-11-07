@@ -5,6 +5,7 @@ import 'package:eshop/buyer%22s_section/state_manager/saved_item_notifier.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
 
@@ -40,13 +41,13 @@ class _SavedAdPageState extends ConsumerState<SavedAdPage> {
       ),
       body: SafeArea(
         child: stateDeleteWatcher.isDeleting?
-        Center(child: SpinKitFadingCircle(color: Colors.black, size: 25),):
+        Center(child: SpinKitFadingCircle(color: Colors.black, size: 25.sp),):
         StreamBuilder(
           stream: marketPhoneDb.getIndividualSaved(myId),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
-                child: SpinKitFadingCircle(color: Colors.black, size: 25),
+                child: SpinKitFadingCircle(color: Colors.black, size: 25.sp),
               );
             }
             if (snapshot.hasError) {
@@ -54,7 +55,7 @@ class _SavedAdPageState extends ConsumerState<SavedAdPage> {
               return Center(
                 child: Text(
                   "An error has occurred",
-                  style: TextStyle(color: Colors.black, fontSize: 20),
+                  style: TextStyle(color: Colors.black, fontSize: 20.sp),
                 ),
               );
             }
@@ -64,7 +65,7 @@ class _SavedAdPageState extends ConsumerState<SavedAdPage> {
               return Center(
                 child: Text(
                   "No Saved Ad yet",
-                  style: TextStyle(color: Colors.grey.shade700, fontSize: 20),
+                  style: TextStyle(color: Colors.grey.shade700, fontSize: 20.sp),
                 ),
               );
             }
@@ -85,33 +86,33 @@ class _SavedAdPageState extends ConsumerState<SavedAdPage> {
                       String docId = savedPhonesDatas[index].id;
 
                       return Container(
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 10,
+                        margin:  EdgeInsets.symmetric(
+                          horizontal: 20.w,
+                          vertical: 10.h,
                         ),
-                        height: 104,
+                        height: 104.h,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(10.r),
                           color: Colors.grey.shade100,
                         ),
                         child: Row(
                           children: [
                             ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(10.r),
                               child: SizedBox(
-                                height: 104,
-                                width: 104,
+                                height: 104.h,
+                                width: 104.w,
                                 child: savedPhoneData.imageUrl == null
                                     ? const SizedBox()
                                     : CachedNetworkImage(
                                   placeholder: (context, url) =>
-                                  const SizedBox(
-                                    height: 20,
-                                    width: 20,
+                                   SizedBox(
+                                    height: 20.h,
+                                    width: 20.w,
                                     child: SpinKitFadingCircle(
                                       color: Colors.black,
-                                      size: 25,
+                                      size: 25.sp,
                                     ),
                                   ),
                                   fit: BoxFit.cover,
@@ -119,7 +120,7 @@ class _SavedAdPageState extends ConsumerState<SavedAdPage> {
                                 ),
                               ),
                             ),
-                            SizedBox(width: 15),
+                            SizedBox(width: 15.w),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -128,29 +129,29 @@ class _SavedAdPageState extends ConsumerState<SavedAdPage> {
                                   savedPhoneData.model,
                                   style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 16,
+                                    fontSize: 16.sp,
                                   ),
                                 ),
                                 Text(
                                   savedPhoneData.condition,
                                   style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 16,
+                                    fontSize: 16.sp,
                                   ),
                                 ),
                                 Text(
                                   savedPhoneData.price,
                                   style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 16,
+                                    fontSize: 16.sp,
                                   ),
                                 ),
 
                                 Text(
-                                  savedPhoneData.username,
+                                  "0${savedPhoneData.whatsappNumber}",
                                   style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 16,
+                                    fontSize: 16.sp,
                                   ),
                                 ),
 
@@ -168,7 +169,7 @@ class _SavedAdPageState extends ConsumerState<SavedAdPage> {
                                           backgroundColor: Colors.white,
                                           title: Text("Delete Ad"),
                                           content: Text(
-                                            "Deleting this ad also deletes it from the main market",
+                                            "Action is irreversible",
                                             style: TextStyle(
                                               color: Colors.grey,
                                             ),
@@ -183,7 +184,7 @@ class _SavedAdPageState extends ConsumerState<SavedAdPage> {
                                                 context.pop();
                                               },
                                             ),
-                                            SizedBox(height: 10),
+                                            SizedBox(height: 10.h),
                                             CustomOutlinedButton(
                                               width: double.infinity,
                                               text: "Cancel",

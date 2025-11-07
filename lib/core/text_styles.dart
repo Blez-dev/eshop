@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class BTextTheme {
@@ -7,42 +8,42 @@ class BTextTheme {
   // Light Theme Text Styles
   static TextTheme lightTextTheme = TextTheme(
     titleLarge: GoogleFonts.lato(
-      fontSize: 30,
+      fontSize: 30.sp,
       fontWeight: FontWeight.w900,
       color: const Color(0xff1E232C),
     ),
     titleMedium: GoogleFonts.lato(
-      fontSize: 18,
+      fontSize: 18.sp,
       fontWeight: FontWeight.w500,
       color: const Color.fromRGBO(125, 125, 125, 1),
     ),
     titleSmall: GoogleFonts.lato(
-      fontSize: 15,
+      fontSize: 15.sp,
       fontWeight: FontWeight.w400,
       color: const Color(0xFF60655C),
     ),
     bodyLarge: GoogleFonts.lato(
-      fontSize: 14,
+      fontSize: 14.sp,
       fontWeight: FontWeight.w600,
       color: Colors.black,
     ),
     bodyMedium: GoogleFonts.lato(
-      fontSize: 15,
+      fontSize: 15.sp,
       fontWeight: FontWeight.w700,
       color: Colors.white,
     ),
     bodySmall: GoogleFonts.lato(
-      fontSize: 14,
+      fontSize: 14.sp,
       fontWeight: FontWeight.w500,
       color: Colors.black.withValues(alpha: 0.5),
     ),
     labelLarge: GoogleFonts.lato(
-      fontSize: 12,
+      fontSize: 12.sp,
       fontWeight: FontWeight.normal,
       color: Colors.black,
     ),
     labelMedium: GoogleFonts.lato(
-      fontSize: 12,
+      fontSize: 12.sp,
       fontWeight: FontWeight.normal,
       color: Colors.black.withValues(alpha: 0.5),
     ),

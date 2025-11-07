@@ -3,6 +3,7 @@ import 'package:eshop/presentation/components/custom_outlined_button.dart';
 import 'package:eshop/routes_file/route_paths.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NavigatorScreen extends StatelessWidget {
   const NavigatorScreen({super.key});
@@ -27,13 +28,13 @@ class NavigatorScreen extends StatelessWidget {
               ),
 
               Positioned(
-                  right: 0,
-                  left: 0,
-                  bottom: 160,
+                  right: 0.w,
+                  left: 0.w,
+                  bottom: 160.h,
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(12.0),
+                        padding:  EdgeInsets.all(12.0.r),
                         child: CustomButton(width: double.infinity, text: "Login", onTap: (){
                           context.push(RoutePaths.signIn);
                         }),
@@ -43,13 +44,13 @@ class NavigatorScreen extends StatelessWidget {
                     ],
                   )),
               Positioned(
-                  right: 0,
-                  left: 0,
-                  bottom: 80,
+                  right: 0.w,
+                  left: 0.w,
+                  bottom: 80.h,
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(12.0),
+                        padding:  EdgeInsets.all(12.0.r),
                         child: CustomOutlinedButton(width: double.infinity, text: "Sign up", onTap: (){
                           context.push(RoutePaths.signUp);
                         }),

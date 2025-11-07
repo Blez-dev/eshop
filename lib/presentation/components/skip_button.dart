@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SkipCustomButton extends StatelessWidget {
   final double width;
@@ -18,11 +19,11 @@ class SkipCustomButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        height: 50,
+        height: 50.h,
         width: width,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(12.r),
           // color: Color.fromRGBO(219, 48, 34, 0.1) // 10% opacity
           // super light
           // very, very light red

@@ -1,5 +1,6 @@
 import 'package:eshop/presentation/components/custom_circular_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomButton extends StatelessWidget {
   final double width;
@@ -20,11 +21,11 @@ class CustomButton extends StatelessWidget {
     return InkWell(
       onTap: isLoading ? null : onTap, // disable while loading
       child: Container(
-        height: 50,
+        height: 50.h,
         width: width,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(12.r),
           color: const Color(0xFFDB3022),
         ),
         child: isLoading

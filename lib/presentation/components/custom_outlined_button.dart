@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomOutlinedButton extends StatelessWidget {
   final double width;
@@ -18,12 +19,12 @@ class CustomOutlinedButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        height: 50,
+        height: 50.h,
         width: width,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Color(0xFFDB3022), width: 2),
+          borderRadius: BorderRadius.circular(12.r),
+          border: Border.all(color: Color(0xFFDB3022), width: 2.w),
         ),
         child: Text(
           text,

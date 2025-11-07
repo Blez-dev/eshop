@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextField extends StatefulWidget {
   final String hintText;
@@ -28,9 +29,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
   Widget build(BuildContext context) {
     return TextField(
       inputFormatters: [
-        LengthLimitingTextInputFormatter(widget.inputLength?? 30),
+        LengthLimitingTextInputFormatter(widget.inputLength?? 35),
       ],
-      style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 14,color: Colors.black),
+      style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 14.sp,color: Colors.black),
       obscureText: widget.obscureText,
       controller: widget.controller,
       decoration: InputDecoration(
@@ -42,26 +43,26 @@ class _CustomTextFieldState extends State<CustomTextField> {
         filled: true,
         fillColor: const Color(0xffF7F8F9), // background color
         contentPadding:
-        const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
+     EdgeInsets.symmetric(horizontal: 12.w, vertical: 20.h),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(
+          borderRadius: BorderRadius.circular(8.r),
+          borderSide:  BorderSide(
             color: Colors.grey, // border color
-            width: 1,
+            width: 1.w,
           ),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(
+          borderRadius: BorderRadius.circular(8.r),
+          borderSide:  BorderSide(
             color: Colors.grey,
-            width: 1,
+            width: 1.w,
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(
+          borderRadius: BorderRadius.circular(8.r),
+          borderSide:  BorderSide(
             color: Colors.red, // border color when focused
-            width: 1,
+            width: 1.w,
           ),
         ),
       ),

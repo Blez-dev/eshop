@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NumberContainer extends StatelessWidget {
   final Widget text;
@@ -13,13 +14,13 @@ class NumberContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50,
-      width: 110,
+      height: 50.h,
+      width: 110.w,
       decoration: BoxDecoration(
         color: const Color(0xFFDB3022),
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(30),
-          bottomLeft: Radius.circular(30),
+          topLeft: Radius.circular(30.r),
+          bottomLeft: Radius.circular(30.r),
         ),
       ),
       alignment: Alignment.center,
@@ -28,8 +29,8 @@ class NumberContainer extends StatelessWidget {
           children: [
 
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Image.asset(imagePath,height: 40,width: 40,),
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              child: Image.asset(imagePath,height: 40.h,width: 40.w,),
             ),
 
             Expanded(child: text)

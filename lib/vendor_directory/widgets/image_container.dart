@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ImageContainer extends StatelessWidget {
   final Widget imageWidget;
@@ -8,14 +9,14 @@ class ImageContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 160,
-      width: 180,
+      height: 160.h,
+      width: 180.w,
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.grey,
-          width: 1,
+          width: 1.w,
         ),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
       ),
       child: imageWidget,
     );

@@ -5,6 +5,7 @@ import 'package:eshop/buyer%22s_section/views/profile_page.dart';
 import 'package:eshop/buyer%22s_section/views/saved_ad_details.dart';
 import 'package:eshop/buyer%22s_section/views/sub_views/account_details_page.dart';
 import 'package:eshop/buyer%22s_section/views/sub_views/compose_message_screen.dart';
+import 'package:eshop/buyer%22s_section/views/sub_views/confirm_delete_account.dart';
 import 'package:eshop/buyer%22s_section/views/sub_views/contact_us_options_page.dart';
 import 'package:eshop/buyer%22s_section/views/sub_views/report_ad_page.dart';
 import 'package:eshop/buyer%22s_section/views/sub_views/report_dispute_page.dart';
@@ -182,7 +183,7 @@ class AppRoutes {
         },
       ),
 
-
+      //
       GoRoute(
         path: RoutePaths.accountDetailsPage,
         pageBuilder: (context, state) {
@@ -204,7 +205,14 @@ class AppRoutes {
         },
       ),
 
-      GoRoute(
+  // GoRoute(
+  // path: RoutePaths.accountDetailsPage,
+  // builder: (context, state) => const AccountDetailsPage(),
+  // ),
+
+
+
+  GoRoute(
         path: RoutePaths.contactUsOptionPage,
         pageBuilder: (context, state) {
           return CustomTransitionPage(
@@ -291,6 +299,26 @@ class AppRoutes {
           return CustomTransitionPage(
             key: state.pageKey,
             child:  ReportAdPage(),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              // Fade transition
+              return FadeTransition(
+                opacity: CurvedAnimation(
+                  parent: animation,
+                  curve: Curves.linearToEaseOut,
+                ),
+                child: child,
+              );
+            },
+            transitionDuration: const Duration(seconds: 1), // 👈 slow fade
+          );
+        },
+      ),
+      GoRoute(
+        path: RoutePaths.confirmDeleteAccount,
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            key: state.pageKey,
+            child:  ConfirmDeleteAccount(),
             transitionsBuilder: (context, animation, secondaryAnimation, child) {
               // Fade transition
               return FadeTransition(
@@ -465,7 +493,7 @@ class AppRoutes {
               return FadeTransition(
                 opacity: CurvedAnimation(
                   parent: animation,
-                  curve: Curves.linearToEaseOut,
+                  curve: Curves.linear,
                 ),
                 child: child,
               );
@@ -474,6 +502,15 @@ class AppRoutes {
           );
         },
       ),
+
+      // GoRoute(
+      //   path: RoutePaths.phoneDetailsPage,
+      //   builder: (context, state) {
+      //     final useMe = state.extra as ImageClass;
+      //     return PhoneDetailsPage(imageData: useMe);
+      //   },
+      // ),
+
 
       GoRoute(
         path: RoutePaths.savedAdDetails,

@@ -22,4 +22,5 @@ class RoutePaths {
   static const String reportOptionsPage = '/reportOptionsPage';
   static const String reportDisputePage = '/reportDisputePage';
   static const String reportVendorAd = '/reportVendorAd';
+  static const String confirmDeleteAccount = '/confirmDeleteAccount';
 }

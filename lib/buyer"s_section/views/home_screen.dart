@@ -11,17 +11,27 @@ import 'package:eshop/vendor_directory/services/clothes_database_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
 
+
+import '../state_manager/profile_state_notifier.dart';
+
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
-
   @override
   ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
-
 class _HomeScreenState extends ConsumerState<HomeScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      ref.read(profileStateProvider.notifier).fetchUserInfo();
+    });
+  }
   final PhonesDatabaseService phones = PhonesDatabaseService();
   final BuyersDatabase marketPhones = BuyersDatabase();
   final  buyerId= FirebaseAuth.instance.currentUser!.uid;
@@ -37,14 +47,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         centerTitle: true,
         backgroundColor: Color(0xffFFA6A6),
         title: SizedBox(
-          height: 45,
-          width: MediaQuery.of(context).size.width * 0.65,
+          height: 45.h,
+          width: MediaQuery.of(context).size.width * 0.65.w,
           child: TextField(
             onChanged: (value) {
               selectionStateAction.setBrandStatus(value);
             },
             decoration: InputDecoration(
-              contentPadding: EdgeInsets.symmetric(horizontal: 15),
+              contentPadding: EdgeInsets.symmetric(horizontal: 15.w),
               prefixIcon: Icon(Icons.search),
               prefixIconColor: Colors.grey,
               hintText: "Search for phone\"S brand ",
@@ -52,38 +62,38 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               filled: true,
               fillColor: Colors.white,
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(color: Colors.grey, width: 1),
+                borderRadius: BorderRadius.circular(12.r),
+                borderSide: BorderSide(color: Colors.grey, width: 1.w),
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(color: Colors.grey, width: 1),
+                borderRadius: BorderRadius.circular(12.r),
+                borderSide: BorderSide(color: Colors.grey, width: 1.w),
               ),
             ),
           ),
         ),
-        actionsPadding: EdgeInsets.symmetric(horizontal: 5),
+        actionsPadding: EdgeInsets.symmetric(horizontal: 5.w),
 
       ),
       body: SafeArea(
         child: Column(
           children: [
-            SizedBox(height: 20),
+            SizedBox(height: 20.h),
 
 
             ClipRRect(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(12.r),
               child: Image(
                 image: AssetImage("assets/images/phonesBanner.png"),
                 fit: BoxFit.cover,
                 width: double.infinity,
-                height: 120,
+                height: 120.h,
               ),
             ),
-            SizedBox(height: 15),
+            SizedBox(height: 15.h),
             Container(
               alignment: Alignment.centerLeft,
-              margin: EdgeInsets.only(left: 16),
+              margin: EdgeInsets.only(left: 16.w),
               child: Column(
                 children: [
                   SingleChildScrollView(
@@ -104,7 +114,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 10),
+                        SizedBox(width: 10.w),
                         InkWell(
                           onTap: () {
                             selectionStateAction.lessThan400();
@@ -119,7 +129,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 10),
+                        SizedBox(width: 10.w),
                         InkWell(
                           onTap: () {
                             selectionStateAction.lessThan700();
@@ -134,7 +144,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 10),
+                        SizedBox(width: 10.w),
                         InkWell(
                           onTap: () {
                             selectionStateAction.lessThan1M();
@@ -149,7 +159,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 10),
+                        SizedBox(width: 10.w),
                         InkWell(
                           onTap: () {
                             selectionStateAction.lessThanOnePoint5M();
@@ -164,7 +174,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 10),
+                        SizedBox(width: 10.w),
                         InkWell(
                           onTap: () {
                             selectionStateAction.onePoint5MAbove();
@@ -182,7 +192,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 15),
+                  SizedBox(height: 15.h),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
@@ -200,11 +210,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
                             child: Column(
                               children: [
-                                SizedBox(height: 13),
+                                SizedBox(height: 13.h),
                                 Image.asset(
                                   "assets/images/apple.png",
-                                  height: 25,
-                                  width: 25,
+                                  height: 25.h,
+                                  width: 25.w,
                                 ),
 
                                 Expanded(
@@ -217,7 +227,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 10),
+                        SizedBox(width: 10.w),
                         //samsung Tile
                         InkWell(
                           onTap: () {
@@ -231,7 +241,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
                             child: Column(
                               children: [
-                                SizedBox(height: 13),
+                                SizedBox(height: 13.h),
                                 Image.asset("assets/images/samsung2.png"),
 
                                 Expanded(
@@ -244,7 +254,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 10),
+                        SizedBox(width: 10.w),
                         //Techno Tile
                         InkWell(
                           onTap: () {
@@ -257,11 +267,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 : Color(0xffE8ECF4),
                             child: Column(
                               children: [
-                                SizedBox(height: 10),
+                                SizedBox(height: 10.h),
                                 Image.asset(
                                   "assets/images/techno.png",
-                                  height: 40,
-                                  width: 40,
+                                  height: 40.h,
+                                  width: 40.w,
                                 ),
 
                                 Expanded(
@@ -274,7 +284,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 10),
+                        SizedBox(width: 10.w),
                         InkWell(
                           onTap: () {
                             selectionStateAction.xiaomiPicked();
@@ -286,23 +296,25 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 : Color(0xffE8ECF4),
                             child: Column(
                               children: [
-                                SizedBox(height: 13),
+                                SizedBox(height: 13.h),
 
-                                const Image(
+                                 Image(
                                   image: AssetImage("assets/images/xiaomi.png"),
-                                  height: 25,
-                                  width: 23,
+                                  height: 25.h,
+                                  width: 23.w,
                                 ),
 
-                                Text(
-                                  "Xiaomi",
-                                  style: TextStyle(color: Colors.black),
+                                Expanded(
+                                  child: Text(
+                                    "Xiaomi",
+                                    style: TextStyle(color: Colors.black),
+                                  ),
                                 ),
                               ],
                             ),
                           ),
                         ),
-                        SizedBox(width: 10),
+                        SizedBox(width: 10.w),
                         InkWell(
                           onTap: () {
                             selectionStateAction.infinixPicked();
@@ -314,16 +326,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 : Color(0xffE8ECF4),
                             child: Column(
                               children: [
-                                SizedBox(height: 13),
+                                SizedBox(height: 13.h),
                                 Image.asset(
                                   "assets/images/infinix.png",
-                                  height: 35,
-                                  width: 35,
+                                  height: 35.h,
+                                  width: 35.w,
                                 ),
 
-                                Text(
-                                  "Infinix",
-                                  style: TextStyle(color: Colors.black),
+                                Expanded(
+                                  child: Text(
+                                    "Infinix",
+                                    style: TextStyle(color: Colors.black),
+                                  ),
                                 ),
                               ],
                             ),
@@ -347,7 +361,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(child:  SpinKitFadingCircle(
                       color: Colors.black,
-                      size: 25,
+                      size: 25.sp,
                     ),);
                   }
                   if (snapshot.hasError) {
@@ -367,14 +381,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       final itemWidth = usableWidth / crossAxisCount;
 
                       // Dynamic aspect ratio (height ~1.4x of width)
-                      final itemHeight = itemWidth * 1.4;
+                      final itemHeight = itemWidth * 1.7.h;
 
                       return GridView.builder(
-                        padding: const EdgeInsets.all(8),
+                        padding:  EdgeInsets.all(8.r),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: crossAxisCount,
-                          mainAxisSpacing: 8,
-                          crossAxisSpacing: 8,
+                          mainAxisSpacing: 8.h,
+                          crossAxisSpacing: 8.w,
                           childAspectRatio: itemWidth / itemHeight,
                         ),
                         itemCount: data.length,
@@ -385,30 +399,32 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
                           return InkWell(
                             onTap: () async{
-
                               final adExists= await marketPhones.checkAd(buyerId, useMe.docId.toString());
                              if(adExists){
-
                                isSavedAction.isSavedTrue();
+
                                if(!context.mounted) return;
+
                                context.push(RoutePaths.phoneDetailsPage,extra: useMe);
                              }else{
                                isSavedAction.isSavedFalse();
+
                                if(!context.mounted) return;
+
                                context.push(RoutePaths.phoneDetailsPage,extra: useMe);
                              }
                             },
                             child: Container(
                               decoration: BoxDecoration(
                                 color: Color(0xffE8ECF4),
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(10.r),
                               ),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   // 🖼 Product image
                                   ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius: BorderRadius.circular(10.r),
                                     child: useMe.imageUrl == null
                                         ? Container(
                                             height:
@@ -434,7 +450,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                                   child:
                                                   SpinKitFadingCircle(
                                                     color: Colors.black,
-                                                    size: 25,
+                                                    size: 25.sp,
                                                   ),
                                                 ),
                                             errorWidget: (context, url, error) =>
@@ -445,18 +461,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                           ),
                                   ),
 
-                                  const SizedBox(height: 6),
+                                   SizedBox(height: 6.h),
 
                                   // 🏷 Product name
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 6,
+                                    padding:  EdgeInsets.symmetric(
+                                      horizontal: 6.w,
                                     ),
                                     child: Text(
                                       useMe.model,
-                                      style: const TextStyle(
+                                      style:  TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 15,
+                                        fontSize: 15.sp,
                                         color: Colors.black,
                                       ),
                                       overflow: TextOverflow.ellipsis,
@@ -465,28 +481,28 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
                                   // 📦 Category
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 6,
+                                    padding:  EdgeInsets.symmetric(
+                                      horizontal: 6.w,
                                     ),
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           useMe.condition,
-                                          style: const TextStyle(
+                                          style:  TextStyle(
                                             color: Colors.grey,
                                             fontWeight: FontWeight.w600,
-                                            fontSize: 14,
+                                            fontSize: 14.sp,
                                           ),
                                         ),
 
 
                                         Text(
                                           useMe.location,
-                                          style: const TextStyle(
+                                          style:  TextStyle(
                                             color: Colors.grey,
                                             fontWeight: FontWeight.w600,
-                                            fontSize: 14,
+                                            fontSize: 14.sp,
                                           ),
                                         ),
                                       ],
@@ -496,15 +512,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
                                   // 💰 Price
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 6,
+                                    padding:  EdgeInsets.symmetric(
+                                      horizontal: 6.w,
                                     ),
                                     child: Text(
                                       useMe.price,
-                                      style: const TextStyle(
+                                      style:  TextStyle(
                                         color: Colors.red,
                                         fontWeight: FontWeight.w600,
-                                        fontSize: 14,
+                                        fontSize: 14.sp,
                                       ),
                                     ),
                                   ),

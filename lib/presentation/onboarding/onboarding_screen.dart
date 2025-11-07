@@ -4,6 +4,7 @@ import 'package:eshop/presentation/components/skip_button.dart';
 import 'package:eshop/presentation/onboarding/controller/auth_controller_state.dart';
 import 'package:eshop/routes_file/route_paths.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -23,11 +24,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
         body: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 19,vertical: 24),
+              padding:  EdgeInsets.symmetric(horizontal: 19.w,vertical: 24.h),
               child: Column(
                 children: [
                       Container(
-                        height: MediaQuery.of(context).size.height*0.7,
+                        height: MediaQuery.of(context).size.height*0.7.h,
                         child: PageView.builder(
                           onPageChanged: (index){
                             setState(() {
@@ -44,17 +45,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             children: [
 
                               Image.asset(onboardingItem.image,
-                                height: MediaQuery.of(context).size.height* 0.4,
+                                height: MediaQuery.of(context).size.height* 0.4.h,
                               width: double.infinity,
                                 fit: BoxFit.cover,
                               ),
-                              SizedBox(height: 15,),
+                              SizedBox(height: 15.h,),
                               Text(
                                   textAlign: TextAlign.center,
                                   onboardingItem.title,
                                 style: Theme.of(context).textTheme.titleLarge
                               ),
-                              SizedBox(height: 15,),
+                              SizedBox(height: 15.h,),
                               Text(onboardingItem.description,
                                 style: Theme.of(context).textTheme.titleMedium!.copyWith(
                                   fontStyle: FontStyle.italic,
@@ -76,13 +77,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                        children: [
                          ...List.generate(items.length, (index){
                            return AnimatedContainer(
-                               width: index==currentIndex?20:9,
-                               height: 7,
+                               width: index==currentIndex?20.w:9.w,
+                               height: 7.h,
 
                                duration: Duration(milliseconds: 100),
-                                margin: EdgeInsets.symmetric(horizontal: 4),
+                                margin: EdgeInsets.symmetric(horizontal: 4.w),
                              decoration: BoxDecoration(
-                               borderRadius: BorderRadius.circular(4),
+                               borderRadius: BorderRadius.circular(4.r),
                                color: index==currentIndex? Color.fromRGBO(219, 48, 34, 1): Color(0xffB5BDCB)
                              ),
 
@@ -93,15 +94,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         Spacer(),
                   Row(
                     children: [
-                      SkipCustomButton(width: 110, text: "skip", onTap: (){
+                      SkipCustomButton(width: 110.w, text: "skip", onTap: (){
                         context.go(RoutePaths.navigator);
                       }),
-                      SizedBox(width: 10,),
+                      SizedBox(width: 10.w,),
                       Expanded(
                         child: CustomButton(
-                          width: 229,
+                          width: 229.w,
                           text: currentIndex==counts?"Get Started":"Next",
                           onTap: () {
+
                            if(currentIndex<counts){
                              _pageController.nextPage(duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
                            }else{

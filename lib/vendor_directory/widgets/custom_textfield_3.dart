@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextField3 extends StatefulWidget {
   final String hintText;
@@ -28,7 +29,7 @@ class _CustomTextField3State extends State<CustomTextField3> {
     return TextFormField(
       maxLines: 8,
       keyboardType: widget.keyboardType,
-      style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 14,color: Colors.black),
+      style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 14.sp,color: Colors.black),
       obscureText: widget.obscureText,
       controller: widget.controller,
       decoration: InputDecoration(
@@ -41,26 +42,26 @@ class _CustomTextField3State extends State<CustomTextField3> {
         filled: true,
         fillColor: const Color(0xffF7F8F9), // background color
         contentPadding:
-        const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
+         EdgeInsets.symmetric(horizontal: 12.w, vertical: 20.h),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(
+          borderRadius: BorderRadius.circular(8.r),
+          borderSide:  BorderSide(
             color: Colors.grey, // border color
-            width: 1,
+            width: 1.w,
           ),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(
+          borderRadius: BorderRadius.circular(8.r),
+          borderSide:  BorderSide(
             color: Colors.grey,
-            width: 1,
+            width: 1.w,
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(
+          borderRadius: BorderRadius.circular(8.r),
+          borderSide:  BorderSide(
             color: Colors.grey, // border color when focused
-            width: 1,
+            width: 1.w,
           ),
         ),
       ),

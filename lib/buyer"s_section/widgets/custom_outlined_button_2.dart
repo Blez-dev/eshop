@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomOutlinedButton2 extends StatelessWidget {
   final double width;
@@ -19,18 +20,18 @@ class CustomOutlinedButton2 extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        height: 50,
+        height: 50.h,
         width: width,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Color(0xFFDB3022), width: 2),
+          borderRadius: BorderRadius.circular(12.r),
+          border: Border.all(color: Color(0xFFDB3022), width: 2.w),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(FontAwesomeIcons.whatsapp,color: Color(0xFFDB3022),),
-            SizedBox(width: 10,),
+            SizedBox(width: 10.w,),
             Text(
               text,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(

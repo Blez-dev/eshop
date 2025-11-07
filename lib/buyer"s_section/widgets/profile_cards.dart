@@ -1,6 +1,7 @@
 
 import 'package:eshop/buyer%22s_section/widgets/icon_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomProfileChip extends StatelessWidget {
   final Widget iconTileWidget;
@@ -10,9 +11,9 @@ class CustomProfileChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 65,
+      height: 65.h,
       width: double.infinity,
-        padding: EdgeInsets.symmetric(horizontal: 15),
+        padding: EdgeInsets.symmetric(horizontal: 15.w),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(10))
@@ -21,10 +22,10 @@ class CustomProfileChip extends StatelessWidget {
       child: Row(
         children: [
           IconTile(iconTileWidget: iconTileWidget),
-          SizedBox(width: 15,),
+          SizedBox(width: 15.w,),
           Text(text,style: TextStyle(color: Colors.black),),
           Spacer(),
-          Icon(Icons.arrow_forward_ios,size: 15,)
+          Icon(Icons.arrow_forward_ios,size: 15.sp,)
         ],
       ),
 

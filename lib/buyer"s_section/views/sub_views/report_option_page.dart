@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../routes_file/route_paths.dart';
 import '../../widgets/icon_tile.dart';
 
@@ -14,34 +14,34 @@ class ReportOptionsPage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            const SizedBox(height: 30),
+            SizedBox(height: 30.h),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
+              padding:  EdgeInsets.symmetric(horizontal: 40.w),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
                     onPressed: () {
-                      context.go(RoutePaths.profilePage);
+                      context.pop();
                     },
-                    icon: const Icon(Icons.arrow_back_ios_new, size: 15),
+                    icon:  Icon(Icons.arrow_back_ios_new, size: 15.sp),
                   ),
-                  const Text(
+                   Text(
                     "Report Vendor/ Ad",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                        fontSize: 18
-                    ),
+                     style: TextStyle(
+                       fontWeight: FontWeight.bold,
+                       color: Colors.black,
+                       fontSize: 24.sp,
+                     ),
                   ),
-                  const Opacity(
+                  Opacity(
                     opacity: 0,
-                    child: Icon(Icons.arrow_back_ios_new, size: 15),
+                    child: Icon(Icons.arrow_back_ios_new, size: 15.sp),
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 30),
+            SizedBox(height: 30.h),
 
             // First contact option
             GestureDetector(
@@ -49,28 +49,28 @@ class ReportOptionsPage extends StatelessWidget {
                 context.push(RoutePaths.reportDisputePage);
               },
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 32),
+                padding:  EdgeInsets.symmetric(horizontal: 32.w),
                 child: Container(
-                  height: 65,
+                  height: 65.h,
                   width: double.infinity,
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  padding:  EdgeInsets.symmetric(horizontal: 15.w),
                   decoration: BoxDecoration(
                     color: Colors.grey[200],
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
+                    borderRadius:  BorderRadius.only(
+                      topLeft: Radius.circular(10.r),
+                      topRight: Radius.circular(10.r),
                     ),
                   ),
                   child: Row(
-                    children: const [
+                    children:  [
                       IconTile(iconTileWidget: Icon(FontAwesomeIcons.whatsapp)),
-                      SizedBox(width: 15),
+                      SizedBox(width: 15.w),
                       Text(
                         "Report Dispute",
                         style: TextStyle(color: Colors.black),
                       ),
                       Spacer(),
-                      Icon(Icons.arrow_forward_ios, size: 15),
+                      Icon(Icons.arrow_forward_ios, size: 15.sp),
                     ],
                   ),
                 ),
@@ -83,28 +83,28 @@ class ReportOptionsPage extends StatelessWidget {
                 context.push(RoutePaths.reportVendorAd);
               },
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 32),
+                padding:  EdgeInsets.symmetric(horizontal: 32.w),
                 child: Container(
-                  height: 65,
+                  height: 65.h,
                   width: double.infinity,
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  padding:  EdgeInsets.symmetric(horizontal: 15.w),
                   decoration: BoxDecoration(
                     color: Colors.grey[200],
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(10),
-                      bottomRight: Radius.circular(10),
+                    borderRadius:  BorderRadius.only(
+                      bottomLeft: Radius.circular(10.r),
+                      bottomRight: Radius.circular(10.r),
                     ),
                   ),
                   child: Row(
-                    children: const [
-                      IconTile(iconTileWidget: Icon(FontAwesomeIcons.comment,size: 18,)),
-                      SizedBox(width: 15),
+                    children:  [
+                      IconTile(iconTileWidget: Icon(FontAwesomeIcons.comment,size: 18.sp,)),
+                      SizedBox(width: 15.w),
                       Text(
                         "Report Vendor's Ad",
                         style: TextStyle(color: Colors.black),
                       ),
                       Spacer(),
-                      Icon(Icons.arrow_forward_ios, size: 15),
+                      Icon(Icons.arrow_forward_ios, size: 15.sp),
                     ],
                   ),
                 ),

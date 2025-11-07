@@ -1,6 +1,7 @@
 import 'package:eshop/vendor_directory/state_manager/image_picker_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PhoneConditionDropdown extends ConsumerStatefulWidget {
   final List<String> categories;
@@ -19,10 +20,10 @@ class _CustomDropdownButtonState extends ConsumerState<PhoneConditionDropdown> {
   Widget build(BuildContext context) {
     final categorySetter =ref.read(postAddStateNotifier.notifier);
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      padding:  EdgeInsets.symmetric(horizontal: 12.w),
       decoration: BoxDecoration(
         color: Color(0xffF7F8F9),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(8.r),
         border: Border.all(color: Colors.grey.shade400),
       ),
       child: DropdownButtonHideUnderline(

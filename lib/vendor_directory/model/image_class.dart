@@ -28,6 +28,8 @@ class ImageClass {
   final String? email;
   final String? whatsappNumber;
   final String userId; // ✅ Added userId
+  final bool uploadFailed;
+
 
   // ✅ Constructor
   ImageClass({
@@ -53,6 +55,8 @@ class ImageClass {
     this.email,
     this.whatsappNumber,
     this.userId = "", // ✅ Default empty string
+    this.uploadFailed=false,
+
   });
 
   // ✅ copyWith method
@@ -79,6 +83,8 @@ class ImageClass {
     String? email,
     String? whatsappNumber,
     String? userId, // ✅ Added userId
+    bool? detailsIsLoading,
+    bool? uploadFailed,
   }) {
     return ImageClass(
       uploadSuccess: uploadSuccess ?? this.uploadSuccess,
@@ -103,6 +109,8 @@ class ImageClass {
       email: email ?? this.email,
       whatsappNumber: whatsappNumber ?? this.whatsappNumber,
       userId: userId ?? this.userId, // ✅ Include in copyWith
+      uploadFailed: uploadFailed?? this.uploadFailed,
+
     );
   }
 

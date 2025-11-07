@@ -17,6 +17,8 @@ import 'package:eshop/vendor_directory/widgets/size_tile.dart';
 import 'package:eshop/vendor_directory/widgets/upload_custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
 
 class AddItemsPage extends ConsumerStatefulWidget {
@@ -52,10 +54,10 @@ class _AddItemsPageState extends ConsumerState<AddItemsPage> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24),
+            padding: EdgeInsets.symmetric(horizontal: 24.w),
             child: Column(
               children: [
-                SizedBox(height: 30),
+                SizedBox(height: 30.h),
                 //IMAGE CONTAINER BELOW
                 InkWell(
                   onTap: () {
@@ -63,23 +65,23 @@ class _AddItemsPageState extends ConsumerState<AddItemsPage> {
                       context: context,
                       builder: (BuildContext context) {
                         return Container(
-                          height: 350,
+                          height: 350.h,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                              topRight: Radius.circular(30),
+                              topLeft: Radius.circular(30.r),
+                              topRight: Radius.circular(30.r),
                             ),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding:  EdgeInsets.all(8.0.r),
                             child: Column(
                               children: [
                                 Text(
                                   "Pick Image From",
                                   style: TextStyle(color: Colors.black),
                                 ),
-                                SizedBox(height: 30),
+                                SizedBox(height: 30.h),
                                 CustomButton(
                                   width: double.infinity,
                                   text: "Camera",
@@ -88,7 +90,7 @@ class _AddItemsPageState extends ConsumerState<AddItemsPage> {
                                     Navigator.pop(context);
                                   },
                                 ),
-                                SizedBox(height: 30),
+                                SizedBox(height: 30.h),
                                 CustomOutlinedButton(
                                   width: double.infinity,
                                   text: "Gallery",
@@ -111,7 +113,7 @@ class _AddItemsPageState extends ConsumerState<AddItemsPage> {
                           ),
                         )
                       : ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(20.r),
                           child: ImageContainer(
                             imageWidget: Image.file(
                               width: double.infinity,
@@ -124,15 +126,15 @@ class _AddItemsPageState extends ConsumerState<AddItemsPage> {
                 ),
                 //Title reusable container below
 
-                SizedBox(height: 20),
+                SizedBox(height: 20.h),
 
 
 
-                SizedBox(height: 20),
+                SizedBox(height: 20.h),
                 InkWell(child: ButtonField(title: "Brand: ",pickedOption: adFieldName.brand,),onTap: (){
                         context.push(RoutePaths.brandPage);
                 },),
-                SizedBox(height: 20),
+                SizedBox(height: 20.h),
                 InkWell(child: ButtonField(title: "Model: ",pickedOption: adFieldName.isBrandChanged?" ":adFieldName.model,),onTap: (){
                   if(adFieldName.brandSelection==true){
                     context.push(RoutePaths.modelPage);
@@ -141,17 +143,17 @@ class _AddItemsPageState extends ConsumerState<AddItemsPage> {
                     SecondToastHelper.error("Brand needs to be selected first");
                   }
                 },),
-                SizedBox(height: 20),
+                SizedBox(height: 20.h),
                 RamDropdown(categories: ramCategories, hintText: "Select Ram"),
-                SizedBox(height: 20),
+                SizedBox(height: 20.h),
                 RomDropdown(categories: romCategories, hintText: "Select Rom"),
-                SizedBox(height: 20),
+                SizedBox(height: 20.h),
                 PhoneConditionDropdown(categories: phoneCondition, hintText: "Specify Condition"),
-                SizedBox(height: 20),
+                SizedBox(height: 20.h),
                 InkWell(child: ButtonField(title: "Location: ",pickedOption: adFieldName.location,),onTap: (){
                   context.push(RoutePaths.locationPage);
                 },),
-                SizedBox(height: 20),
+                SizedBox(height: 20.h),
                 CustomTextField3(
                   hintText: "Enter Description of Phone",
                   controller: _descriptionEditingController,
@@ -159,7 +161,7 @@ class _AddItemsPageState extends ConsumerState<AddItemsPage> {
                   obscureText: false,
                 ),
 
-                SizedBox(height: 20),
+                SizedBox(height: 20.h),
                 CustomTextField2(
 
                   hintText: "Enter Price of item",
@@ -167,7 +169,7 @@ class _AddItemsPageState extends ConsumerState<AddItemsPage> {
                   obscureText: false,
                   keyboardType: TextInputType.number,
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 20.h),
 
 
 
@@ -175,10 +177,10 @@ class _AddItemsPageState extends ConsumerState<AddItemsPage> {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     "Swap Possible ? ",
-                    style: TextStyle(color: Colors.black, fontSize: 20),
+                    style: TextStyle(color: Colors.black, fontSize: 20.sp),
                   ),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 10.h),
 
 
                 //Row for swappable yes/no question
@@ -203,7 +205,7 @@ class _AddItemsPageState extends ConsumerState<AddItemsPage> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 10),
+                    SizedBox(width: 10.w),
                     Expanded(
                       child: InkWell(
                         onTap: () {
@@ -223,21 +225,30 @@ class _AddItemsPageState extends ConsumerState<AddItemsPage> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 10),
+                    SizedBox(width: 10.w),
 
                   ],
                 ),
 
-                SizedBox(height: 40),
+                SizedBox(height: 40.h),
                 CustomButton2(
                   width: double.infinity,
                   onTap: imageProvider.isLoading!
                       ? () {}
                       : () async {
+                    showDialog(context: context,
+                        barrierDismissible: false,
+                        builder: (_) {
+                          return PopScope(
+                              canPop: false,
+                              child: SpinKitFadingCircle(
+                              color: Colors.black, size: 40.sp));
+                        });
                           await imageStateReader.uploadItem(
 
                             _priceEditingController.text.trim(),
                             _descriptionEditingController.text.trim(),
+
                           );
 
                           if (!context.mounted) return;
@@ -246,6 +257,7 @@ class _AddItemsPageState extends ConsumerState<AddItemsPage> {
                             context.go(RoutePaths.uploadSuccessfulPage);
                           } else {
                             SecondToastHelper.error("Upload failed");
+                            context.pop();
                           }
                         },
                   txt: imageProvider.isLoading!
@@ -257,7 +269,7 @@ class _AddItemsPageState extends ConsumerState<AddItemsPage> {
                           ).textTheme.bodyMedium?.copyWith(color: Colors.white),
                         ),
                 ),
-                SizedBox(height: 100),
+                SizedBox(height: 100.h),
               ],
             ),
           ),

@@ -27,6 +27,14 @@ class SavedAdNotifier extends StateNotifier<SavedAdStateClass> {
 
   }
 
+void isDetailsSavingPositive(){
+    state=state.copyWith(detailsIsSaving: true);
+}
+
+  void isDetailsSavingNegative(){
+    state=state.copyWith(detailsIsSaving: false);
+  }
+
   void isSavedFalse(){
     state=state.copyWith(isSaved: false);
 

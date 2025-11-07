@@ -7,12 +7,14 @@ import 'package:eshop/vendor_directory/model/image_class.dart';
 import 'package:eshop/vendor_directory/services/image_picker_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/legacy.dart';
+import 'package:go_router/go_router.dart';
 
 class PostAddNotifier extends StateNotifier<ImageClass> {
   ImagePickerService imagePickerService;
 
-  RegDatabase usersInfo= RegDatabase();
+  RegDatabase usersInfo = RegDatabase();
 
   PostAddNotifier(this.imagePickerService) : super(ImageClass());
 
@@ -121,13 +123,13 @@ class PostAddNotifier extends StateNotifier<ImageClass> {
         state = state.copyWith(isLoading: true);
         final firestore = FirebaseFirestore.instance;
         final userId = FirebaseAuth.instance.currentUser!.uid;
-        state= state.copyWith(userId: userId);
+        state = state.copyWith(userId: userId);
 
-        DocumentSnapshot userDoc =await usersInfo.getUserInfo();
-        if(userDoc.exists){
-          var usersInfo = userDoc.data() as Map<String,dynamic>;
-          String username= usersInfo["username"];
-          String whatsappNumber =usersInfo["whatsappNumber"];
+        DocumentSnapshot userDoc = await usersInfo.getUserInfo();
+        if (userDoc.exists) {
+          var usersInfo = userDoc.data() as Map<String, dynamic>;
+          String username = usersInfo["username"];
+          String whatsappNumber = usersInfo["whatsappNumber"];
           String email = usersInfo["email"];
 
           await uploadImageToDatabase();
@@ -138,29 +140,30 @@ class PostAddNotifier extends StateNotifier<ImageClass> {
           final docId = docIdAsInt.toString();
           state = state.copyWith(docId: docIdAsInt);
 
-
-
           //add for the general market
-          final marketRef = await firestore.collection("market").doc(docId).set({
-            "description": state.description,
-            "price": state.price,
-            "brand": state.brand,
-            "model": state.model,
-            "ramItem": state.ramItem,
-            "romItem": state.romItem,
-            "condition": state.condition,
-            "location": state.location,
-            "imageUrl": state.imageUrl,
-            "createdOn": state.createdOn,
-            "isYes": state.isYes,
-            "isNo": state.isNo,
-            "docId": docIdAsInt,
-            "intPrice": priceInInt,
-            "email" : email,
-            "username": username,
-            "whatsappNumber": whatsappNumber,
-            "userId": state.userId,
-          });
+          final marketRef = await firestore
+              .collection("market")
+              .doc(docId)
+              .set({
+                "description": state.description,
+                "price": state.price,
+                "brand": state.brand,
+                "model": state.model,
+                "ramItem": state.ramItem,
+                "romItem": state.romItem,
+                "condition": state.condition,
+                "location": state.location,
+                "imageUrl": state.imageUrl,
+                "createdOn": state.createdOn,
+                "isYes": state.isYes,
+                "isNo": state.isNo,
+                "docId": docIdAsInt,
+                "intPrice": priceInInt,
+                "email": email,
+                "username": username,
+                "whatsappNumber": whatsappNumber,
+                "userId": state.userId,
+              });
           //add for each individual user
           final docRef = await firestore
               .collection("users")
@@ -168,45 +171,40 @@ class PostAddNotifier extends StateNotifier<ImageClass> {
               .collection("phones")
               .doc(docId)
               .set({
-            "description": state.description,
-            "price": state.price,
-            "brand": state.brand,
-            "model": state.model,
-            "ram": state.ramItem,
-            "rom": state.romItem,
-            "condition": state.condition,
-            "location": state.location,
-            "imageUrl": state.imageUrl,
-            "createdOn": state.createdOn,
-            "isYes": state.isYes,
-            "isNo": state.isNo,
-            "docId": docIdAsInt,
-            "intPrice": priceInInt,
-            "email" : email,
-            "username": username,
-            "whatsappNumber": whatsappNumber,
-            "userId": state.userId,
-          });
+                "description": state.description,
+                "price": state.price,
+                "brand": state.brand,
+                "model": state.model,
+                "ram": state.ramItem,
+                "rom": state.romItem,
+                "condition": state.condition,
+                "location": state.location,
+                "imageUrl": state.imageUrl,
+                "createdOn": state.createdOn,
+                "isYes": state.isYes,
+                "isNo": state.isNo,
+                "docId": docIdAsInt,
+                "intPrice": priceInInt,
+                "email": email,
+                "username": username,
+                "whatsappNumber": whatsappNumber,
+                "userId": state.userId,
+              });
 
           if (true) {
             state = state.copyWith(uploadSuccess: true);
             SecondToastHelper.success("Item Successfully uploaded");
           }
-        }else{
-
-        }
-
-
+        } else {}
       } catch (e) {
         SecondToastHelper.error(e.toString());
       } finally {
         state = state.copyWith(isLoading: false);
       }
     } else {
+      state = state.copyWith(uploadFailed: true);
       SecondToastHelper.error("All fields must be filled");
     }
-
-
   }
 }
 

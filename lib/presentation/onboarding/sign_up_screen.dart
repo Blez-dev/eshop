@@ -8,11 +8,13 @@ import 'package:eshop/presentation/components/social_tile.dart';
 import 'package:eshop/presentation/components/toast_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../data/services/firebase_auth_state_notifier.dart';
 import '../../routes_file/route_paths.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SignUpScreen extends ConsumerStatefulWidget {
   const SignUpScreen({super.key});
@@ -39,8 +41,7 @@ class _SigninScreenState extends ConsumerState<SignUpScreen> {
     String username,
     String confirmPassword,
     BuildContext context,
-    bool isVendor,
-    bool isBuyer,
+
       String whatsappNumber
   ) async {
     if (email.isNotEmpty &&
@@ -48,21 +49,21 @@ class _SigninScreenState extends ConsumerState<SignUpScreen> {
         username.isNotEmpty &&
         confirmPassword.isNotEmpty &&
         whatsappNumber.isNotEmpty&&
-        whatsappNumber.length==10&&
-        (isVendor || isBuyer)) {
+        whatsappNumber.length==10
+        ) {
       if (confirmPassword == password) {
         final result = await obj.signup(email, password, context,username,whatsappNumber);
         if (!context.mounted) return;
-        if (result != null && isVendor) {
+        if (result != null) {
           ToastHelper.success(context, "Signup Successful");
           await Future.delayed(Duration(milliseconds: 1000));
           if (!context.mounted) return;
           context.push(RoutePaths.signIn);
-        } else if (result != null && isBuyer) {
+        } else if (result != null ) {
           ToastHelper.success(context, "Signup Successful");
           await Future.delayed(const Duration(milliseconds: 1000));
           if (!context.mounted) return;
-          context.push(RoutePaths.navigator);
+          context.push(RoutePaths.signIn);
         }
       } else {
         ToastHelper.error(context, "confirm password and password must match");
@@ -73,12 +74,7 @@ class _SigninScreenState extends ConsumerState<SignUpScreen> {
           username.isNotEmpty &&
           whatsappNumber.isNotEmpty&&
           confirmPassword.isNotEmpty) {
-       if(whatsappNumber.length==10){
-         ToastHelper.error(
-           context,
-           "Kindly pick your role \"Vendor\" or \"Buyer\"",
-         );
-       }else{
+       if(whatsappNumber.length!=10){
          ToastHelper.error(
            context,
            "Number must be of 10 characters",
@@ -106,27 +102,27 @@ class _SigninScreenState extends ConsumerState<SignUpScreen> {
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 22,
-                    vertical: 35,
+                  padding:  EdgeInsets.symmetric(
+                    horizontal: 22.w,
+                    vertical: 35.h,
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(height: 20),
+                       SizedBox(height: 20.h),
                       InkWell(
                         onTap: () {
                           context.pop();
                         },
                         child: CustomBackButton(),
                       ),
-                      const SizedBox(height: 25),
+                       SizedBox(height: 25.h),
                       Text(
                         "Hello! Register to get \nstarted",
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
 
-                      const SizedBox(height: 25),
+                       SizedBox(height: 25.h),
                       Row(
 
                         children: [
@@ -134,7 +130,7 @@ class _SigninScreenState extends ConsumerState<SignUpScreen> {
                             text: Text("+234"),
                             imagePath: "assets/images/nigerian_flag.png",
                           ),
-                          SizedBox(width: 10,),
+                          SizedBox(width: 10.w,),
                           PhoneNumberTextField(
                             hintText: "Enter Whatsapp Number Here",
                             controller: numberController,
@@ -143,109 +139,52 @@ class _SigninScreenState extends ConsumerState<SignUpScreen> {
                         ],
                       ),
 
-                      const SizedBox(height: 15),
+                       SizedBox(height: 15.h),
                       CustomTextField(
                         inputLength: 20,
                         hintText: "Username",
                         controller: usernameController,
                         obscureText: false,
                       ),
-                      const SizedBox(height: 15),
+                       SizedBox(height: 15.h),
                       CustomTextField(
                         hintText: "Email",
                         controller: emailController,
                         obscureText: false,
                       ),
-                      const SizedBox(height: 15),
+                       SizedBox(height: 15.h),
                       CustomTextField(
                         hintText: "Password",
-                        obscureText: isEye,
+                        obscureText: !isEye,
                         controller: passwordController,
                         icon: IconButton(
                           onPressed: () {
                             ref.read(signUpEyeState.notifier).eyeToggle();
                           },
-                          icon: !isEye
+                          icon: isEye
                               ? const Icon(Icons.visibility)
                               : const Icon(Icons.visibility_off),
                         ),
                       ),
-                      const SizedBox(height: 15),
+                       SizedBox(height: 15.h),
                       CustomTextField(
                         hintText: "Confirm password",
-                        obscureText: isEye2,
+                        obscureText: !isEye2,
                         controller: confirmPasswordController,
                         icon: IconButton(
                           onPressed: () {
                             ref.read(signUpEyeState2.notifier).eyeToggle();
                           },
-                          icon: !isEye2
+                          icon: isEye2
                               ? const Icon(Icons.visibility)
                               : const Icon(Icons.visibility_off),
                         ),
                       ),
-                      const SizedBox(height: 15),
+                       SizedBox(height: 15.h),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Expanded(
-                            child: Row(
-                              children: [
-                                Text(
-                                  "Vendor",
-                                  style: Theme.of(context).textTheme.bodySmall
-                                      ?.copyWith(
-                                        color: const Color(0xff1E232C),
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    ref.read(signUpCheckBox.notifier).toggele();
-                                    ref
-                                        .read(signUpCheckBox2.notifier)
-                                        .defaultval();
-                                  },
-                                  icon: Icon(
-                                    isCheckedVendor
-                                        ? Icons.check_box
-                                        : Icons
-                                              .check_box_outline_blank_outlined,
-                                    color: Color.fromRGBO(219, 48, 34, 1),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              children: [
-                                Text(
-                                  "Buyer",
-                                  style: Theme.of(context).textTheme.bodySmall
-                                      ?.copyWith(
-                                        color: const Color(0xff1E232C),
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    ref.read(signUpCheckBox2.notifier).toggle();
-                                    ref
-                                        .read(signUpCheckBox.notifier)
-                                        .defaultval();
-                                  },
-                                  icon: Icon(
-                                    isCheckedBuyer
-                                        ? Icons.check_box
-                                        : Icons
-                                              .check_box_outline_blank_outlined,
-                                    color: Color.fromRGBO(219, 48, 34, 1),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+
                           InkWell(
                             onTap: () {
                               context.push(RoutePaths.forgotPassword);
@@ -258,12 +197,13 @@ class _SigninScreenState extends ConsumerState<SignUpScreen> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 30),
+                       SizedBox(height: 30.h),
                       CustomButton(
                         isLoading: authStateWatch.isLoading,
                         width: double.infinity,
                         text: "Register",
                         onTap: () {
+
                           signUp(
                             authStateRead,
                             emailController.text.trim(),
@@ -271,49 +211,14 @@ class _SigninScreenState extends ConsumerState<SignUpScreen> {
                             usernameController.text.trim(),
                             confirmPasswordController.text.trim(),
                             context,
-                            isCheckedVendor,
-                            isCheckedBuyer,
+
                             numberController.text.trim(),
                           );
                         },
                       ),
-                      const SizedBox(height: 30),
-                      Row(
-                        children: [
-                          const Expanded(
-                            child: Divider(color: Color(0xffE8ECF4)),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Text(
-                              "Or Register With",
-                              style: Theme.of(context).textTheme.bodySmall
-                                  ?.copyWith(color: const Color(0xff6A707C)),
-                            ),
-                          ),
-                          const Expanded(
-                            child: Divider(color: Color(0xffE8ECF4)),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 30),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: SocialTile(image: "assets/images/fb.png"),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: SocialTile(
-                              image: "assets/images/google.png",
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: SocialTile(image: "assets/images/apple.png"),
-                          ),
-                        ],
-                      ),
+                       SizedBox(height: 30.h),
+
+
                     ],
                   ),
                 ),
@@ -322,9 +227,9 @@ class _SigninScreenState extends ConsumerState<SignUpScreen> {
 
             // Fixed bottom text
             SizedBox(
-              height: 50,
+              height: 50.h,
               child: Padding(
-                padding: const EdgeInsets.only(bottom: 20),
+                padding:  EdgeInsets.only(bottom: 20.h),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -332,10 +237,10 @@ class _SigninScreenState extends ConsumerState<SignUpScreen> {
                       "Already have an account?",
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
-                    const SizedBox(width: 10),
+                     SizedBox(width: 10.w),
                     InkWell(
                       onTap: () {
-                        context.go(RoutePaths.signIn);
+                        context.push(RoutePaths.signIn);
                       },
                       child: Text(
                         "Login Now",

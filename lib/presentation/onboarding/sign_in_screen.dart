@@ -13,8 +13,11 @@ import 'package:eshop/routes_file/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
+
 
 class SigninScreen extends ConsumerStatefulWidget {
   const SigninScreen({super.key});
@@ -29,14 +32,12 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
   final TextEditingController passwordController = TextEditingController();
 
   // function to sign in
-  void signIn(
-    AuthNotifier obj,
-    String email,
-    String password,
-    BuildContext context,
-    bool isVendor,
-    bool isBuyer,
-  ) async {
+  void signIn(AuthNotifier obj,
+      String email,
+      String password,
+      BuildContext context,
+      bool isVendor,
+      bool isBuyer,) async {
     if (email.isNotEmpty && password.isNotEmpty) {
       if (!context.mounted) return;
       if (isVendor) {
@@ -94,14 +95,14 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 22),
+                  padding: EdgeInsets.symmetric(horizontal: 22.w),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(height: 20),
+                       SizedBox(height: 20.h),
 
                       InkWell(
-                        onTap: (){
+                        onTap: () {
                           context.pop();
                         },
                         child: CustomBackButton(
@@ -109,32 +110,35 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
 
                         ),
                       ),
-                      const SizedBox(height: 25),
+                       SizedBox(height: 25.h),
                       Text(
 
                         "Welcome back!, Glad \n to see you, Again!",
-                        style: Theme.of(context).textTheme.titleLarge,
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .titleLarge,
                       ),
-                      const SizedBox(height: 25),
+                      SizedBox(height: 25.h),
                       CustomTextField(
                         hintText: "Enter your email",
                         controller: emailController,
                         obscureText: false,
                       ),
-                      const SizedBox(height: 15),
+                       SizedBox(height: 15.h),
                       CustomTextField(
                         hintText: "Enter your password",
-                        obscureText: isEye,
+                        obscureText: !isEye,
                         controller: passwordController,
                         icon: IconButton(
                           onPressed: () =>
                               ref.read(eyeState.notifier).eyeToggle(),
-                          icon: !isEye
+                          icon: isEye
                               ? const Icon(Icons.visibility)
                               : const Icon(Icons.visibility_off),
                         ),
                       ),
-                      const SizedBox(height: 15),
+                       SizedBox(height: 15.h),
 
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -144,11 +148,14 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
                               children: [
                                 Text(
                                   "Vendor",
-                                  style: Theme.of(context).textTheme.bodySmall
+                                  style: Theme
+                                      .of(context)
+                                      .textTheme
+                                      .bodySmall
                                       ?.copyWith(
-                                        color: const Color(0xff1E232C),
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                    color: const Color(0xff1E232C),
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                                 IconButton(
                                   onPressed: () {
@@ -159,7 +166,7 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
                                     isCheckedVendor
                                         ? Icons.check_box
                                         : Icons
-                                              .check_box_outline_blank_outlined,
+                                        .check_box_outline_blank_outlined,
                                     color: const Color(0xFFDB3022),
                                   ),
                                 ),
@@ -171,11 +178,14 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
                               children: [
                                 Text(
                                   "Buyer",
-                                  style: Theme.of(context).textTheme.bodySmall
+                                  style: Theme
+                                      .of(context)
+                                      .textTheme
+                                      .bodySmall
                                       ?.copyWith(
-                                        color: const Color(0xff1E232C),
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                    color: const Color(0xff1E232C),
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                                 IconButton(
                                   onPressed: () {
@@ -186,7 +196,7 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
                                     isCheckedBuyer
                                         ? Icons.check_box
                                         : Icons
-                                              .check_box_outline_blank_outlined,
+                                        .check_box_outline_blank_outlined,
                                     color: const Color(0xFFDB3022),
                                   ),
                                 ),
@@ -199,18 +209,22 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
                             },
                             child: Text(
                               "Forgot Password?",
-                              style: Theme.of(context).textTheme.bodySmall
+                              style: Theme
+                                  .of(context)
+                                  .textTheme
+                                  .bodySmall
                                   ?.copyWith(color: const Color(0xff6A707C)),
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 30),
+                       SizedBox(height: 30.h),
                       CustomButton(
                         width: double.infinity,
                         isLoading: authStateWatch.isLoading,
                         text: "Login",
                         onTap: () {
+
                           signIn(
                             authStateRead,
                             emailController.text.trim(),
@@ -219,60 +233,30 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
                             isCheckedVendor,
                             isCheckedBuyer,
                           );
+
+
+
                         },
                       ),
-                      // const SizedBox(height: 30),
-                      // Row(
-                      //   children: [
-                      //     const Expanded(
-                      //       child: Divider(color: Color(0xffE8ECF4)),
-                      //     ),
-                      //     Container(
-                      //       margin: const EdgeInsets.symmetric(horizontal: 20),
-                      //       child: Text(
-                      //         "Or Login With",
-                      //         style: Theme.of(context).textTheme.bodySmall
-                      //             ?.copyWith(color: const Color(0xff6A707C)),
-                      //       ),
-                      //     ),
-                      //     const Expanded(
-                      //       child: Divider(color: Color(0xffE8ECF4)),
-                      //     ),
-                      //   ],
-                      // ),
-                      // const SizedBox(height: 30),
-                      // Row(
-                      //   children: [
-                      //     Expanded(
-                      //       child: SocialTile(image: "assets/images/fb.png"),
-                      //     ),
-                      //     const SizedBox(width: 12),
-                      //     Expanded(
-                      //       child: SocialTile(
-                      //         image: "assets/images/google.png",
-                      //       ),
-                      //     ),
-                      //     const SizedBox(width: 12),
-                      //     Expanded(
-                      //       child: SocialTile(image: "assets/images/apple.png"),
-                      //     ),
-                      //   ],
-                      // ),
+
                     ],
                   ),
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 20),
+              padding:  EdgeInsets.only(bottom: 20.h),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     "Don’t have an account?",
-                    style: Theme.of(context).textTheme.bodySmall,
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .bodySmall,
                   ),
-                  const SizedBox(width: 10),
+                   SizedBox(width: 10.w),
 
                   InkWell(
                     onTap: () {
@@ -280,7 +264,11 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
                     },
                     child: Text(
                       "Register Now",
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .bodySmall
+                          ?.copyWith(
                         color: const Color(0xffDB3022),
                         fontWeight: FontWeight.bold,
                       ),

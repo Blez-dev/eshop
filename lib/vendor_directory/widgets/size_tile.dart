@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../state_manager/sizes_notifier.dart';
 
@@ -26,12 +27,12 @@ class _SizeTileState extends ConsumerState<SizeTile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 40,
+      height: 40.h,
 
       decoration: BoxDecoration(
         color: widget.backgroundColor,
-        borderRadius: BorderRadius.circular(12),
-        border: BoxBorder.all(width: 0.5,color: widget.borderColor),
+        borderRadius: BorderRadius.circular(12.r),
+        border: BoxBorder.all(width: 0.5.w,color: widget.borderColor),
       ),
       child: Center(
         child: Text(widget.size, style: TextStyle(color: widget.textColor)),

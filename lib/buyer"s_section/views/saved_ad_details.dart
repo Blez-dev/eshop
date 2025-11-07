@@ -11,6 +11,7 @@ import 'package:eshop/vendor_directory/model/image_class.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class SavedAdDetails extends ConsumerStatefulWidget {
@@ -53,7 +54,7 @@ class _PhoneDetailsPageState extends ConsumerState<SavedAdDetails> {
           children: [
             Container(
               width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.5,
+              height: MediaQuery.of(context).size.height * 0.5.h,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: CachedNetworkImageProvider(imageUrl),
@@ -65,7 +66,7 @@ class _PhoneDetailsPageState extends ConsumerState<SavedAdDetails> {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(20),
+                padding:  EdgeInsets.all(20.r),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -77,14 +78,14 @@ class _PhoneDetailsPageState extends ConsumerState<SavedAdDetails> {
                             context.pop();
                           },
                           child: Container(
-                            height: 36,
-                            width: 36,
+                            height: 36.h,
+                            width: 36.w,
                             decoration: BoxDecoration(
                               color: Colors.white,
-                              borderRadius: BorderRadius.circular(18),
+                              borderRadius: BorderRadius.circular(18.r),
                             ),
                             child: Center(
-                              child: const Icon(
+                              child:  Icon(
                                 Icons.arrow_back_ios_new_outlined,
                               ),
                             ),
@@ -96,7 +97,7 @@ class _PhoneDetailsPageState extends ConsumerState<SavedAdDetails> {
                     ),
 
                     const Spacer(),
-                    const SizedBox(height: 10),
+                     SizedBox(height: 10.h),
                   ],
                 ),
               ),
@@ -105,27 +106,27 @@ class _PhoneDetailsPageState extends ConsumerState<SavedAdDetails> {
             Align(
               alignment: Alignment.bottomCenter,
               child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(24),
-                  topRight: Radius.circular(24),
+                borderRadius:  BorderRadius.only(
+                  topLeft: Radius.circular(24.r),
+                  topRight: Radius.circular(24.r),
                 ),
                 child: Container(
                   width: double.infinity,
-                  height: MediaQuery.of(context).size.height * 0.55,
+                  height: MediaQuery.of(context).size.height * 0.55.h,
                   color: Color(0xffE8ECF4),
-                  padding: const EdgeInsets.all(20),
+                  padding:  EdgeInsets.all(20.r),
 
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          padding: EdgeInsets.all(20),
+                          padding: EdgeInsets.all(20.r),
                           decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(12.r),
                             border: BoxBorder.all(
-                              width: 1,
+                              width: 1.w,
                               color: Colors.white,
                             ),
                           ),
@@ -138,14 +139,14 @@ class _PhoneDetailsPageState extends ConsumerState<SavedAdDetails> {
                                     Icons.location_on_outlined,
                                     color: Colors.grey,
                                   ),
-                                  SizedBox(width: 10),
+                                  SizedBox(width: 10.w),
                                   Text(
                                     widget.adData.location,
                                     style: TextStyle(color: Colors.grey),
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 5),
+                              SizedBox(height: 5.h),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -153,25 +154,25 @@ class _PhoneDetailsPageState extends ConsumerState<SavedAdDetails> {
                                     widget.adData.model,
                                     style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 16,
+                                      fontSize: 16.sp,
                                     ),
                                   ),
                                   Text(
                                     widget.adData.price,
                                     style: TextStyle(
                                       color: Colors.red,
-                                      fontSize: 16,
+                                      fontSize: 16.sp,
                                     ),
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 10),
+                              SizedBox(height: 10.h),
                               Row(
                                 children: [
                                   CustomOutlinedButton2(
                                     width:
                                     MediaQuery.of(context).size.width *
-                                        0.35,
+                                        0.35.w,
                                     text: "Whatsapp",
                                     onTap: () async {
                                       await widget.whatsappLauncher
@@ -186,7 +187,7 @@ class _PhoneDetailsPageState extends ConsumerState<SavedAdDetails> {
                                   CustomButton3(
                                     width:
                                     MediaQuery.of(context).size.width *
-                                        0.35,
+                                        0.35.w,
                                     text: "Call",
                                     onTap: () async {
 
@@ -201,14 +202,14 @@ class _PhoneDetailsPageState extends ConsumerState<SavedAdDetails> {
                             ],
                           ),
                         ),
-                        SizedBox(height: 20),
+                        SizedBox(height: 20.h),
                         Container(
-                          padding: EdgeInsets.all(20),
+                          padding: EdgeInsets.all(20.r),
                           decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(12.r),
                             border: BoxBorder.all(
-                              width: 1,
+                              width: 1.w,
                               color: Colors.white,
                             ),
                           ),
@@ -225,11 +226,11 @@ class _PhoneDetailsPageState extends ConsumerState<SavedAdDetails> {
                                     widget.adData.brand,
                                     style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 16,
+                                      fontSize: 16.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(height: 20),
+                                  SizedBox(height: 20.h),
                                   Text(
                                     "Condition",
                                     style: TextStyle(color: Colors.grey),
@@ -239,11 +240,11 @@ class _PhoneDetailsPageState extends ConsumerState<SavedAdDetails> {
                                     widget.adData.condition,
                                     style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 16,
+                                      fontSize: 16.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(height: 20),
+                                  SizedBox(height: 20.h),
 
                                   Text(
                                     "Swappable?",
@@ -254,11 +255,11 @@ class _PhoneDetailsPageState extends ConsumerState<SavedAdDetails> {
                                     widget.adData.swappable,
                                     style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 16,
+                                      fontSize: 16.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(height: 20),
+                                  SizedBox(height: 20.h),
                                   Text(
                                     "Ad ID",
                                     style: TextStyle(color: Colors.grey),
@@ -268,7 +269,7 @@ class _PhoneDetailsPageState extends ConsumerState<SavedAdDetails> {
                                     widget.adData.docId,
                                     style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 16,
+                                      fontSize: 16.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -278,7 +279,7 @@ class _PhoneDetailsPageState extends ConsumerState<SavedAdDetails> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SizedBox(height: 20),
+                                  SizedBox(height: 20.h),
                                   Text(
                                     "Vendor",
                                     style: TextStyle(color: Colors.grey),
@@ -287,11 +288,11 @@ class _PhoneDetailsPageState extends ConsumerState<SavedAdDetails> {
                                     widget.adData.username ?? "Null",
                                     style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 16,
+                                      fontSize: 16.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(height: 20),
+                                  SizedBox(height: 20.h),
                                   Text(
                                     "Ram",
                                     style: TextStyle(color: Colors.grey),
@@ -300,11 +301,11 @@ class _PhoneDetailsPageState extends ConsumerState<SavedAdDetails> {
                                     widget.adData.ram,
                                     style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 16,
+                                      fontSize: 16.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(height: 20),
+                                  SizedBox(height: 20.h),
                                   Text(
                                     "Rom",
                                     style: TextStyle(color: Colors.grey),
@@ -314,11 +315,11 @@ class _PhoneDetailsPageState extends ConsumerState<SavedAdDetails> {
                                     widget.adData.rom,
                                     style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 16,
+                                      fontSize: 16.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(height: 20),
+                                  SizedBox(height: 20.h),
                                   Text(
                                     "",
                                     style: TextStyle(color: Colors.grey),
@@ -328,24 +329,24 @@ class _PhoneDetailsPageState extends ConsumerState<SavedAdDetails> {
                                     "",
                                     style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 16,
+                                      fontSize: 16.sp,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(height: 20),
+                                  SizedBox(height: 20.h),
                                 ],
                               ),
                             ],
                           ),
                         ),
-                        SizedBox(height: 20),
+                        SizedBox(height: 20.h),
                         Container(
-                          padding: EdgeInsets.all(20),
+                          padding: EdgeInsets.all(20.r),
                           decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(12.r),
                             border: BoxBorder.all(
-                              width: 1,
+                              width: 1.w,
                               color: Colors.white,
                             ),
                           ),

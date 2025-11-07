@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PhoneNumberTextField extends StatefulWidget {
   final String hintText;
@@ -33,7 +34,7 @@ class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
         keyboardType: TextInputType.phone,
         style: Theme.of(
           context,
-        ).textTheme.bodySmall?.copyWith(fontSize: 14, color: Colors.black),
+        ).textTheme.bodySmall?.copyWith(fontSize: 14.sp, color: Colors.black),
         obscureText: widget.obscureText,
         controller: widget.controller,
         decoration: InputDecoration(
@@ -45,35 +46,35 @@ class _PhoneNumberTextFieldState extends State<PhoneNumberTextField> {
           filled: true,
           fillColor: const Color(0xffF7F8F9),
           // background color
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 12,
-            vertical: 20,
+          contentPadding:  EdgeInsets.symmetric(
+            horizontal: 12.w,
+            vertical: 20.h,
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.only(
-              topRight: Radius.circular(30),
-              bottomRight: Radius.circular(30),
+              topRight: Radius.circular(30.r),
+              bottomRight: Radius.circular(30.r),
             ),
-            borderSide: const BorderSide(
+            borderSide:  BorderSide(
               color: Colors.grey, // border color
-              width: 1,
+              width: 1.w,
             ),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.only(
-              topRight: Radius.circular(30),
-              bottomRight: Radius.circular(30),
+              topRight: Radius.circular(30.r),
+              bottomRight: Radius.circular(30.r),
             ),
-            borderSide: const BorderSide(color: Colors.grey, width: 1),
+            borderSide:  BorderSide(color: Colors.grey, width: 1.w),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.only(
-              topRight: Radius.circular(30),
-              bottomRight: Radius.circular(30),
+              topRight: Radius.circular(30.r),
+              bottomRight: Radius.circular(30.r),
             ),
-            borderSide: const BorderSide(
+            borderSide: BorderSide(
               color: Colors.red, // border color when focused
-              width: 1,
+              width: 1.w,
             ),
           ),
         ),

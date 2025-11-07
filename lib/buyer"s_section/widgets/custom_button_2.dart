@@ -1,5 +1,6 @@
 import 'package:eshop/presentation/components/custom_circular_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CustomButton3 extends StatelessWidget {
@@ -21,18 +22,18 @@ class CustomButton3 extends StatelessWidget {
     return InkWell(
       onTap:  onTap,
       child: Container(
-        height: 50,
+        height: 50.h,
         width: width,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(12.r),
           color: const Color(0xFFDB3022),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(FontAwesomeIcons.phone,color: Colors.white,size: 18,),
-            SizedBox(width: 10,),
+            Icon(FontAwesomeIcons.phone,color: Colors.white,size: 18.sp,),
+            SizedBox(width: 10.w,),
             Text(
               text,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
