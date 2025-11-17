@@ -23,21 +23,19 @@ class HomeScreen extends ConsumerStatefulWidget {
   @override
   ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
-class _HomeScreenState extends ConsumerState<HomeScreen> {
+class _HomeScreenState extends ConsumerState<HomeScreen>  with AutomaticKeepAliveClientMixin<HomeScreen>{
+
+
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      ref.read(profileStateProvider.notifier).fetchUserInfo();
-    });
-  }
+  bool get wantKeepAlive=>true;
+
   final PhonesDatabaseService phones = PhonesDatabaseService();
   final BuyersDatabase marketPhones = BuyersDatabase();
   final  buyerId= FirebaseAuth.instance.currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final selectionState = ref.watch(priceAndBrandProvider);
     final selectionStateAction = ref.read(priceAndBrandProvider.notifier);
     final isSavedAction= ref.read(savedAdNotifierProvider.notifier);

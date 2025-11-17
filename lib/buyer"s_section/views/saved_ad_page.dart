@@ -22,7 +22,12 @@ class SavedAdPage extends ConsumerStatefulWidget {
   ConsumerState<SavedAdPage> createState() => _SavedAdPageState();
 }
 
-class _SavedAdPageState extends ConsumerState<SavedAdPage> {
+class _SavedAdPageState extends ConsumerState<SavedAdPage> with AutomaticKeepAliveClientMixin<SavedAdPage>{
+
+
+  @override
+  bool get wantKeepAlive=> true;
+
   final phonesDB = PhonesDatabaseService();
   final marketPhoneDb = BuyersDatabase();
   final myId=FirebaseAuth.instance.currentUser!.uid;
@@ -30,6 +35,7 @@ class _SavedAdPageState extends ConsumerState<SavedAdPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final stateDeleteReader= ref.read(buyersStateProvider.notifier);
     final stateDeleteWatcher= ref.watch(buyersStateProvider);
     return Scaffold(

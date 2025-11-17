@@ -1,5 +1,6 @@
 import 'package:eshop/buyer%22s_section/state_manager/profile_state_notifier.dart';
 import 'package:eshop/buyer%22s_section/widgets/profile_cards.dart';
+import 'package:eshop/presentation/components/flutter_toast.dart';
 import 'package:eshop/routes_file/route_paths.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../presentation/components/button.dart';
 import '../../presentation/components/custom_outlined_button.dart';
@@ -19,10 +21,15 @@ class ProfilePage extends ConsumerStatefulWidget {
   ConsumerState<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends ConsumerState<ProfilePage> {
+class _ProfilePageState extends ConsumerState<ProfilePage>  with AutomaticKeepAliveClientMixin{
+
   @override
+  bool get wantKeepAlive=> true;
+
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final profileProviderAction = ref.read(profileStateProvider.notifier);
     final profileProviderState = ref.watch(profileStateProvider);
     return Scaffold(
@@ -105,16 +112,18 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                   decoration: BoxDecoration(color: Color(0xfff7f8f9)),
                   child: Column(
                     children: [
-                      InkWell(
-                        onTap: () {
-                          context.push(RoutePaths.accountDetailsPage);
-                        },
-                        child: CustomProfileChip(
-                          iconTileWidget: Icon(
-                            Icons.account_circle,
-                            color: Color(0xFFDB3022),
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            context.push(RoutePaths.accountDetailsPage);
+                          },
+                          child: CustomProfileChip(
+                            iconTileWidget: Icon(
+                              Icons.account_circle,
+                              color: Color(0xFFDB3022),
+                            ),
+                            text: "Account",
                           ),
-                          text: "Account",
                         ),
                       ),
                       Container(
@@ -122,18 +131,20 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                           border: BoxBorder.all(color: Colors.grey, width: 0.5.w),
                         ),
                       ),
-                      InkWell(
-                        onTap: () {
-                          AuthController.setVendorRole("isVendor", true);
-                          AuthController.setBuyerRole("isBuyer", false);
-                          context.go(RoutePaths.vendorItemsPage);
-                        },
-                        child: CustomProfileChip(
-                          iconTileWidget: Icon(
-                            Icons.swap_horiz_outlined,
-                            color: Color(0xFFDB3022),
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            AuthController.setVendorRole("isVendor", true);
+                            AuthController.setBuyerRole("isBuyer", false);
+                            context.go(RoutePaths.vendorItemsPage);
+                          },
+                          child: CustomProfileChip(
+                            iconTileWidget: Icon(
+                              Icons.swap_horiz_outlined,
+                              color: Color(0xFFDB3022),
+                            ),
+                            text: "Switch to vendor's section",
                           ),
-                          text: "Switch to vendor's section",
                         ),
                       ),
                       Container(
@@ -141,16 +152,18 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                           border: BoxBorder.all(color: Colors.grey, width: 0.5.w),
                         ),
                       ),
-                      InkWell(
-                        onTap: () {
-                          context.push(RoutePaths.contactUsOptionPage);
-                        },
-                        child: CustomProfileChip(
-                          iconTileWidget: Icon(
-                            Icons.phone,
-                            color: Color(0xFFDB3022),
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            context.push(RoutePaths.contactUsOptionPage);
+                          },
+                          child: CustomProfileChip(
+                            iconTileWidget: Icon(
+                              Icons.phone,
+                              color: Color(0xFFDB3022),
+                            ),
+                            text: "Contact us",
                           ),
-                          text: "Contact us",
                         ),
                       ),
                       Container(
@@ -158,16 +171,19 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                           border: BoxBorder.all(color: Colors.grey, width: 0.5.w),
                         ),
                       ),
-                      InkWell(
-                        onTap: () {
-                          context.push(RoutePaths.reportOptionsPage);
-                        },
-                        child: CustomProfileChip(
-                          iconTileWidget: Icon(
-                            Icons.flag,
-                            color: Color(0xFFDB3022),
+                      Expanded(
+                        child: InkWell(
+                          onTap: () async{
+                            final Uri url =Uri.parse("https://sites.google.com/view/blezanteshop/home");
+                              await launchUrl(url);
+                          },
+                          child: CustomProfileChip(
+                            iconTileWidget: Icon(
+                              Icons.policy,
+                              color: Color(0xFFDB3022),
+                            ),
+                            text: "Privacy and policy",
                           ),
-                          text: "Report a Vendor/Ad",
                         ),
                       ),
                       Container(
@@ -175,51 +191,18 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                           border: BoxBorder.all(color: Colors.grey, width: 0.5.w),
                         ),
                       ),
-                      InkWell(
-                        onTap: (){
-                          context.push(RoutePaths.confirmDeleteAccount);
-                          // showDialog(
-                          //   context: context,
-                          //   builder: (builder) {
-                          //     return AlertDialog(
-                          //       backgroundColor: Colors.white,
-                          //       title: Text(
-                          //         "Delete Account",
-                          //         style: TextStyle(fontWeight: FontWeight.w700),
-                          //       ),
-                          //       content: Text(
-                          //         "All associated data  & account will be deleted ",
-                          //         style: TextStyle(color: Colors.grey),
-                          //       ),
-                          //       actions: [
-                          //         CustomButton(
-                          //           width: double.infinity,
-                          //           text: "Delete Account",
-                          //           onTap: () async {
-                          //             await profileProviderAction.deleteUser();
-                          //             if(!context.mounted) return;
-                          //             context.pop();
-                          //           },
-                          //         ),
-                          //         SizedBox(height: 10),
-                          //         CustomOutlinedButton(
-                          //           width: double.infinity,
-                          //           text: "Cancel",
-                          //           onTap: () {
-                          //             context.pop();
-                          //           },
-                          //         ),
-                          //       ],
-                          //     );
-                          //   },
-                          // );
-                        },
-                        child: CustomProfileChip(
-                          iconTileWidget: Icon(
-                            Icons.delete_outline,
-                            color: Color(0xFFDB3022),
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            context.push(RoutePaths.reportOptionsPage);
+                          },
+                          child: CustomProfileChip(
+                            iconTileWidget: Icon(
+                              Icons.flag,
+                              color: Color(0xFFDB3022),
+                            ),
+                            text: "Report a Vendor/Ad",
                           ),
-                          text: "Delete Account",
                         ),
                       ),
                       Container(
@@ -227,53 +210,109 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                           border: BoxBorder.all(color: Colors.grey, width: 0.5.w),
                         ),
                       ),
-                      InkWell(
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (builder) {
-                              return AlertDialog(
-                                backgroundColor: Colors.white,
-                                title: Text(
-                                  "Logout",
-                                  style: TextStyle(fontWeight: FontWeight.w700),
-                                ),
-                                content: Text(
-                                  "Are you sure you wanna log out?",
-                                  style: TextStyle(color: Colors.grey),
-                                ),
-                                actions: [
-                                  CustomButton(
-                                    width: double.infinity,
-                                    text: "Logout",
-                                    onTap: () async {
-                                      await profileProviderAction.logUserOut();
-                                      final  user= FirebaseAuth.instance.currentUser;
-                                      if(user==null){
-                                        if (!context.mounted) return;
-                                        context.go(RoutePaths.navigator);
-                                      }
-                                    },
+                      Expanded(
+                        child: InkWell(
+                          onTap: (){
+                            context.push(RoutePaths.confirmDeleteAccount);
+                            // showDialog(
+                            //   context: context,
+                            //   builder: (builder) {
+                            //     return AlertDialog(
+                            //       backgroundColor: Colors.white,
+                            //       title: Text(
+                            //         "Delete Account",
+                            //         style: TextStyle(fontWeight: FontWeight.w700),
+                            //       ),
+                            //       content: Text(
+                            //         "All associated data  & account will be deleted ",
+                            //         style: TextStyle(color: Colors.grey),
+                            //       ),
+                            //       actions: [
+                            //         CustomButton(
+                            //           width: double.infinity,
+                            //           text: "Delete Account",
+                            //           onTap: () async {
+                            //             await profileProviderAction.deleteUser();
+                            //             if(!context.mounted) return;
+                            //             context.pop();
+                            //           },
+                            //         ),
+                            //         SizedBox(height: 10),
+                            //         CustomOutlinedButton(
+                            //           width: double.infinity,
+                            //           text: "Cancel",
+                            //           onTap: () {
+                            //             context.pop();
+                            //           },
+                            //         ),
+                            //       ],
+                            //     );
+                            //   },
+                            // );
+                          },
+                          child: CustomProfileChip(
+                            iconTileWidget: Icon(
+                              Icons.delete_outline,
+                              color: Color(0xFFDB3022),
+                            ),
+                            text: "Delete Account",
+                          ),
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          border: BoxBorder.all(color: Colors.grey, width: 0.5.w),
+                        ),
+                      ),
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (builder) {
+                                return AlertDialog(
+                                  backgroundColor: Colors.white,
+                                  title: Text(
+                                    "Logout",
+                                    style: TextStyle(fontWeight: FontWeight.w700),
                                   ),
-                                  SizedBox(height: 10.h),
-                                  CustomOutlinedButton(
-                                    width: double.infinity,
-                                    text: "Cancel",
-                                    onTap: () {
-                                      context.pop();
-                                    },
+                                  content: Text(
+                                    "Are you sure you wanna log out?",
+                                    style: TextStyle(color: Colors.grey),
                                   ),
-                                ],
-                              );
-                            },
-                          );
-                        },
-                        child: CustomProfileChip(
-                          iconTileWidget: Icon(
-                            Icons.logout,
-                            color: Color(0xFFDB3022),
+                                  actions: [
+                                    CustomButton(
+                                      width: double.infinity,
+                                      text: "Logout",
+                                      onTap: () async {
+                                        await profileProviderAction.logUserOut();
+                                        final  user= FirebaseAuth.instance.currentUser;
+                                        if(user==null){
+                                          if (!context.mounted) return;
+                                          context.go(RoutePaths.navigator);
+                                        }
+                                      },
+                                    ),
+                                    SizedBox(height: 10.h),
+                                    CustomOutlinedButton(
+                                      width: double.infinity,
+                                      text: "Cancel",
+                                      onTap: () {
+                                        context.pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: CustomProfileChip(
+                            iconTileWidget: Icon(
+                              Icons.logout,
+                              color: Color(0xFFDB3022),
+                            ),
+                            text: "Logout",
                           ),
-                          text: "Logout",
                         ),
                       ),
                     ],
